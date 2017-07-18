@@ -11,7 +11,6 @@
 int main(int argc, char* argv[])
 {
     unsigned time = 0;
-    unsigned timeout = 6;
 
     SDL_Event sdlEvent;
 
@@ -88,7 +87,7 @@ int main(int argc, char* argv[])
 
         //some delay for player(s)
         time += 1;
-        if (time >= timeout)
+        if (time >= RENDERING_TIMEOUT)
         {
             snake.Update(&snake2);
             snake2.Update(&snake);
