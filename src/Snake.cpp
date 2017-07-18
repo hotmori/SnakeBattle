@@ -178,7 +178,7 @@ void Snake::Update(Snake* pAnotherSnake)
     else
     {
         // if no coin then cut off the tail of a snake
-        this->m_Segments.pop_back();
+        this->CutTheTail();
     }
     //move in one possible direction
     this->moveSnake();
