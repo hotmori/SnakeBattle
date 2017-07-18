@@ -140,6 +140,9 @@ void Snake::Update(Snake* pAnotherSnake)
 
     switch ( snakes_collided )
     {
+    //block on collission to avoid greedy behaviour
+    //block is cleaned when first no collission move happened
+    //however there is still issue with moving through walls
     case COLLISSION_HEAD_VS_BODY:
         if (!this->CollissionAnSnakeBlocked)
         {
