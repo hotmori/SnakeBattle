@@ -42,7 +42,6 @@ public:
 private:
     std::deque<SnakeSegment> m_Segments;
     Coin* m_pCoin;
-    bool m_Dead;
     unsigned m_Direction;
     unsigned headColor;
     unsigned segmentColor;

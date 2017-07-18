@@ -63,7 +63,6 @@ void Snake::Alive()
         break;
     }
 
-    this->m_Dead = false;
 }
 
 void Snake::addSegment(unsigned x, unsigned y)
@@ -187,7 +186,7 @@ void Snake::Update(Snake* pAnotherSnake)
 
 bool Snake::IsDead()
 {
-    return (this->m_Dead || this->GetSize() == 0 );
+    return ( this->GetSize() == 0 );
 }
 
 void Snake::UpdateDirection()
@@ -236,7 +235,6 @@ unsigned Snake::GetSegmentY(unsigned i)
 void Snake::Kill()
 {
     this->m_Segments.clear();
-    this->m_Dead = true;
 }
 
 unsigned Snake::CheckForCollission(Snake* pAnotherSnake)
