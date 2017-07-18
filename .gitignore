@@ -32,3 +32,6 @@
 *.app
 
 CLibs/*
+
+SnakeBattle.depend
+SnakeBattle.layout
