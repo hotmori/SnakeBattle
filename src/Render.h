@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 #include "Snake.h"
 #include "config.h"
@@ -17,5 +17,7 @@ public:
 private:
     unsigned m_BackGroundColor;
     SDL_Surface* m_pDisplaySurface;
+    SDL_Window *m_pWindow;
+
     SDL_Rect m_RenderRect;
 };

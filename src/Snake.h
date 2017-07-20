@@ -1,10 +1,11 @@
 #pragma once
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <deque>
 #include "SnakeSegment.h"
 #include "Coin.h"
 #include "config.h"
+#include <cstdlib>
 
 static const unsigned COLLISION_NOT_HAPPENED = 0;
 static const unsigned COLLISSION_HEAD_VS_BODY = 1;

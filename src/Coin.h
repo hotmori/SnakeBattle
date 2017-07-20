@@ -1,5 +1,6 @@
 #pragma once
-#include <SDL/SDL.h>
+#include <cstdlib>
+
 class Coin
 {
 public:

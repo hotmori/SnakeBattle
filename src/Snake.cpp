@@ -191,21 +191,21 @@ bool Snake::IsDead()
 
 void Snake::UpdateDirection()
 {
-    unsigned char* keys = SDL_GetKeyState(NULL);
+    const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
-    if (keys[m_sKeys.GoUpKey] && this->m_Direction != GO_DOWN)
+    if (keys[SDL_GetScancodeFromKey(m_sKeys.GoUpKey)] && this->m_Direction != GO_DOWN)
     {
         this->m_Direction = GO_UP;
     }
-    else if (keys[m_sKeys.GoDownKey] && this->m_Direction != GO_UP)
+    else if (keys[SDL_GetScancodeFromKey(m_sKeys.GoDownKey)] && this->m_Direction != GO_UP)
     {
         this->m_Direction = GO_DOWN;
     }
-    else if (keys[m_sKeys.GoRightKey] && this->m_Direction != GO_LEFT)
+    else if (keys[SDL_GetScancodeFromKey(m_sKeys.GoRightKey)] && this->m_Direction != GO_LEFT)
     {
         this->m_Direction = GO_RIGHT;
     }
-    else if (keys[m_sKeys.GoLeftKey] && this->m_Direction != GO_RIGHT)
+    else if (keys[SDL_GetScancodeFromKey(m_sKeys.GoLeftKey)] && this->m_Direction != GO_RIGHT)
     {
         this->m_Direction = GO_LEFT;
     }
