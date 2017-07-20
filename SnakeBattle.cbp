@@ -13,15 +13,11 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="CLibs/SDL-1.2.15/include" />
-					<Add directory="srcx" />
+					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-lmingw32" />
-					<Add option="-lSDLmain" />
-					<Add option="-lSDL" />
-					<Add directory="CLibs/SDL-1.2.15/lib" />
-					<Add directory="srcx" />
+					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -31,20 +27,22 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="lib/CLibs/SDL-1.2.15/include" />
+					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lmingw32" />
-					<Add option="-lSDLmain" />
-					<Add option="-lSDL" />
-					<Add directory="lib/CLibs/SDL-1.2.15/lib" />
+					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include" />
 		</Compiler>
+		<Linker>
+			<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/lib" />
+		</Linker>
 		<Unit filename="src/Coin.cpp" />
 		<Unit filename="src/Coin.h" />
 		<Unit filename="src/Render.cpp" />

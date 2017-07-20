@@ -1,6 +1,6 @@
 #include "Render.h"
 
-Render::Render(): m_pDisplaySurface ( NULL )
+Render::Render(): m_pDisplaySurface ( NULL ), m_pWindow ( NULL )
 {
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -9,23 +9,29 @@ Render::Render(): m_pDisplaySurface ( NULL )
                   << SDL_GetError() << std::endl;
     }
 
-    m_pDisplaySurface = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    m_pWindow = SDL_CreateWindow("Snake Battle",
+                             SDL_WINDOWPOS_UNDEFINED,
+                             SDL_WINDOWPOS_UNDEFINED,
+                             WINDOW_WIDTH, WINDOW_HEIGHT,
+                             0
+                             /*SDL_WINDOW_FULLSCREEN_DESKTOP*/);
 
-    if (m_pDisplaySurface == NULL)
+    m_pDisplaySurface = SDL_GetWindowSurface( m_pWindow );
+
+    if (m_pWindow == NULL || m_pDisplaySurface == NULL)
     {
-        std::cerr << "SDL_SetVideoMode Failed: "
+        std::cerr << " Failed: "
                   << SDL_GetError() << std::endl;
     }
 
     m_BackGroundColor = this->GetMappedColor(0, 64, 0);
 
-    SDL_WM_SetCaption("Snake Battle", NULL);
 }
 Render::~Render() {}
 
 void Render::RenderBackground ()
 {
-    SDL_FillRect(m_pDisplaySurface, NULL, m_BackGroundColor);
+   SDL_FillRect(m_pDisplaySurface, NULL, m_BackGroundColor);
 }
 
 unsigned Render::GetMappedColor(unsigned Red, unsigned Green, unsigned Blue)
@@ -39,7 +45,7 @@ void Render::RenderObject(Snake* pSnake)
     {
         return;
     }
-//each coordinate (x and y) is multiplicated by cell size to get the right size of rendered rectangle
+    //each coordinate (x and y) is multiplicated by cell size to get the right size of rendered rectangle
     //x and y are correspond to left upper corner of rectangle
 
     m_RenderRect.h = CELL_SIZE;
@@ -79,7 +85,7 @@ void Render::RenderObject(Coin* pCoin)
 
 void Render::Display()
 {
-    SDL_Flip(m_pDisplaySurface);
+    SDL_UpdateWindowSurface( m_pWindow );
     SDL_Delay(C_DELAY);
 }
 

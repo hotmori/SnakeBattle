@@ -1,6 +1,7 @@
 #include <iostream>
 #include <deque>
-#include <SDL/SDL.h>
+
+#include <SDL2/SDL.h>
 
 #include "SnakeSegment.h"
 #include "Coin.h"
@@ -103,7 +104,6 @@ int main(int argc, char* argv[])
 
         render.Display();
     }
-
     SDL_Quit();
 
     return 0;
