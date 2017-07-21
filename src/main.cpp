@@ -52,8 +52,6 @@ int main(int argc, char* argv[])
     Snake snake(SnakeHeadColor, SnakeSegmentColor, &coin, sKeys, 1);
 
     //Second snake
-//    SnakeHeadColor2 = render.GetMappedColor( 140, 0, 140);
-//    SnakeSegmentColor2 = render.GetMappedColor( 0, 0, 200);
 
     SnakeHeadColor2.Red = 140;
     SnakeHeadColor2.Green = 0;

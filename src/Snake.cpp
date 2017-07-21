@@ -174,6 +174,9 @@ void Snake::Update(Snake* pAnotherSnake)
         //no cut of of the tail of a snake happens, that's why it gets longer
         //respawn coin, so it appears in new random place
         this->m_pCoin->Respawn();
+        for (int i=0; i < 10; i++ ) {
+          this->moveSnake();
+        }
     }
     else
     {
