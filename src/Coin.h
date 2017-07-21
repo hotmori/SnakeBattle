@@ -1,15 +1,21 @@
 #pragma once
 #include <cstdlib>
 
+struct CColor {
+    unsigned Red;
+    unsigned Green;
+    unsigned Blue;
+    unsigned Alpha;
+};
+
 class Coin
 {
 public:
-
-    Coin(unsigned coinColor);
+    Coin(CColor coinColor);
     void Respawn();
     unsigned GetX();
     unsigned GetY();
-    unsigned coinColor;
+    CColor m_CoinColor;
     bool IsAvailable();
     void Remove();
 private:

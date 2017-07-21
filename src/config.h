@@ -18,3 +18,4 @@ static const unsigned START_Y = CELL_HEIGHT / 2;
 static const unsigned START_LENGTH = 4;
 
 static const unsigned RENDERING_TIMEOUT = 5;
+

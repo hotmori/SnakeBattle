@@ -1,6 +1,6 @@
 #include "Render.h"
 
-Render::Render(): m_pDisplaySurface ( NULL ), m_pWindow ( NULL )
+Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 {
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -16,10 +16,10 @@ Render::Render(): m_pDisplaySurface ( NULL ), m_pWindow ( NULL )
                              0
                              /*SDL_WINDOW_FULLSCREEN_DESKTOP*/);
 
-    m_pDisplaySurface = SDL_GetWindowSurface( m_pWindow );
+    m_Renderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 
     if (m_pWindow == NULL
-        || m_pDisplaySurface == NULL
+        || m_Renderer == NULL
         || TTF_Init() == -1
         )
     {
@@ -27,19 +27,14 @@ Render::Render(): m_pDisplaySurface ( NULL ), m_pWindow ( NULL )
                   << SDL_GetError() << std::endl;
     }
 
-    m_BackGroundColor = this->GetMappedColor(0, 64, 0);
 
 }
 Render::~Render() {}
 
 void Render::RenderBackground ()
 {
-   SDL_FillRect(m_pDisplaySurface, NULL, m_BackGroundColor);
-}
-
-unsigned Render::GetMappedColor(unsigned Red, unsigned Green, unsigned Blue)
-{
-    return SDL_MapRGB(m_pDisplaySurface->format, Red, Green, Blue);
+   SDL_SetRenderDrawColor(m_Renderer, 0, 64, 0, 255);
+   SDL_RenderFillRect(m_Renderer, NULL);
 }
 
 void Render::RenderObject(Snake* pSnake)
@@ -57,14 +52,24 @@ void Render::RenderObject(Snake* pSnake)
     m_RenderRect.x = pSnake->GetSegmentX(0) * CELL_SIZE;
     m_RenderRect.y = pSnake->GetSegmentY(0) * CELL_SIZE;
 
-    SDL_FillRect(m_pDisplaySurface, &m_RenderRect, pSnake->GetHeadColor());
+    SDL_SetRenderDrawColor(m_Renderer, pSnake->m_headColor.Red,
+                                       pSnake->m_headColor.Green,
+                                       pSnake->m_headColor.Blue,
+                                       pSnake->m_headColor.Alpha);
+
+    SDL_RenderFillRect(m_Renderer, &m_RenderRect);
 
     for (unsigned i = 1; i < pSnake->GetSize(); i += 1)
     {
         m_RenderRect.x = pSnake->GetSegmentX(i) * CELL_SIZE;
         m_RenderRect.y = pSnake->GetSegmentY(i) * CELL_SIZE;
 
-        SDL_FillRect(m_pDisplaySurface, &m_RenderRect, pSnake->GetSegmentColor());
+        SDL_SetRenderDrawColor(m_Renderer, pSnake->m_segmentColor.Red,
+                                           pSnake->m_segmentColor.Green,
+                                           pSnake->m_segmentColor.Blue,
+                                           pSnake->m_segmentColor.Alpha);
+
+        SDL_RenderFillRect(m_Renderer, &m_RenderRect);
     }
 }
 
@@ -83,11 +88,16 @@ void Render::RenderObject(Coin* pCoin)
     m_RenderRect.x = pCoin->GetX() * CELL_SIZE;
     m_RenderRect.y = pCoin->GetY() * CELL_SIZE;
 
-    SDL_FillRect(m_pDisplaySurface, &m_RenderRect, pCoin->coinColor);
+    SDL_SetRenderDrawColor(m_Renderer, pCoin->m_CoinColor.Red,
+                                       pCoin->m_CoinColor.Green,
+                                       pCoin->m_CoinColor.Blue,
+                                       pCoin->m_CoinColor.Alpha);
+
+    SDL_RenderFillRect(m_Renderer, &m_RenderRect);
 }
 
 void Render::Display()
 {
-    SDL_UpdateWindowSurface( m_pWindow );
+    SDL_RenderPresent(m_Renderer);
     SDL_Delay(C_DELAY);
 }
