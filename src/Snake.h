@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <deque>
 #include "SnakeSegment.h"
 #include "Coin.h"

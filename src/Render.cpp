@@ -18,7 +18,10 @@ Render::Render(): m_pDisplaySurface ( NULL ), m_pWindow ( NULL )
 
     m_pDisplaySurface = SDL_GetWindowSurface( m_pWindow );
 
-    if (m_pWindow == NULL || m_pDisplaySurface == NULL)
+    if (m_pWindow == NULL
+        || m_pDisplaySurface == NULL
+        || TTF_Init() == -1
+        )
     {
         std::cerr << " Failed: "
                   << SDL_GetError() << std::endl;
@@ -88,4 +91,3 @@ void Render::Display()
     SDL_UpdateWindowSurface( m_pWindow );
     SDL_Delay(C_DELAY);
 }
-

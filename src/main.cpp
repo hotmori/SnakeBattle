@@ -1,7 +1,7 @@
 #include <iostream>
 #include <deque>
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "SnakeSegment.h"
 #include "Coin.h"
