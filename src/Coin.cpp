@@ -1,9 +1,9 @@
 #include "Coin.h"
 #include "config.h"
 
-Coin::Coin(unsigned coinColor)
+Coin::Coin(CColor coinColor)
 {
-    this->coinColor = coinColor;
+    this->m_CoinColor = coinColor;
     this->Respawn();
 }
 

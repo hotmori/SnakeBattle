@@ -1,13 +1,13 @@
 #include "Snake.h"
 
-Snake::Snake(unsigned headColor,
-             unsigned segmentColor,
+Snake::Snake(SColor headColor,
+             SColor segmentColor,
              Coin* pCoin,
              SKeyControls sKeys,
              unsigned ID)
 {
-    this->headColor = headColor;
-    this->segmentColor = segmentColor;
+    this->m_headColor = headColor;
+    this->m_segmentColor = segmentColor;
     this->m_pCoin = pCoin;
     this->m_sKeys = sKeys;
     this->m_ID = ID;
@@ -214,14 +214,6 @@ void Snake::UpdateDirection()
 unsigned Snake::GetSize()
 {
     return this->m_Segments.size();
-}
-unsigned Snake::GetSegmentColor()
-{
-    return this->segmentColor;
-}
-unsigned Snake::GetHeadColor()
-{
-    return this->headColor;
 }
 unsigned Snake::GetSegmentX(unsigned i)
 {

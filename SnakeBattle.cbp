@@ -13,11 +13,14 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include" />
+					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include/SDL2" />
+					<Add directory="C:/CLibs/SDL2_ttf-2.0.14/i686-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add option="-lSDL2_ttf" />
 					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/lib" />
+					<Add directory="C:/CLibs/SDL2_ttf-2.0.14/i686-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -28,17 +31,24 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include" />
+					<Add directory="C:/CLibs/SDL2_ttf-2.0.14/i686-w64-mingw32/include" />
+					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include/SDL2" />
+					<Add directory="C:/CLibs/SDL2_ttf-2.0.14/i686-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add option="-lSDL2_ttf" />
 					<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/lib" />
+					<Add directory="C:/CLibs/SDL2_ttf-2.0.14/i686-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include" />
+			<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/CLibs/SDL2_ttf-2.0.14/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
 			<Add directory="C:/CLibs/SDL2-2.0.5/i686-w64-mingw32/lib" />

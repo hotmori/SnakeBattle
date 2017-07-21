@@ -1,7 +1,7 @@
 #include <iostream>
 #include <deque>
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "SnakeSegment.h"
 #include "Coin.h"
@@ -15,21 +15,32 @@ int main(int argc, char* argv[])
 
     SDL_Event sdlEvent;
 
-    unsigned SnakeHeadColor, SnakeHeadColor2;
-    unsigned SnakeSegmentColor, SnakeSegmentColor2;
+    SColor SnakeHeadColor, SnakeSegmentColor;
+    SColor SnakeHeadColor2, SnakeSegmentColor2;
 
-    unsigned CoinColor;
+
     bool isRunning;
 
     Render render;
 
-    CoinColor = render.GetMappedColor( 255, 255, 0);
-    Coin coin(CoinColor);
-
     isRunning = true;
 
-    SnakeHeadColor = render.GetMappedColor( 255, 0, 0);
-    SnakeSegmentColor = render.GetMappedColor( 0, 255, 0);
+    CColor CoinColor;
+    CoinColor.Red = 255;
+    CoinColor.Green = 255;
+    CoinColor.Blue = 0;
+    CoinColor.Alpha = 255;
+    Coin coin(CoinColor);
+
+    SnakeHeadColor.Red = 255;
+    SnakeHeadColor.Green = 0;
+    SnakeHeadColor.Blue = 0;
+    SnakeHeadColor.Alpha = 255;
+
+    SnakeSegmentColor.Red = 0;
+    SnakeSegmentColor.Green = 255;
+    SnakeSegmentColor.Blue = 0;
+    SnakeSegmentColor.Alpha = 255;
 
     SKeyControls sKeys;
 
@@ -41,8 +52,18 @@ int main(int argc, char* argv[])
     Snake snake(SnakeHeadColor, SnakeSegmentColor, &coin, sKeys, 1);
 
     //Second snake
-    SnakeHeadColor2 = render.GetMappedColor( 140, 0, 140);
-    SnakeSegmentColor2 = render.GetMappedColor( 0, 0, 200);
+//    SnakeHeadColor2 = render.GetMappedColor( 140, 0, 140);
+//    SnakeSegmentColor2 = render.GetMappedColor( 0, 0, 200);
+
+    SnakeHeadColor2.Red = 140;
+    SnakeHeadColor2.Green = 0;
+    SnakeHeadColor2.Blue = 140;
+    SnakeHeadColor2.Alpha = 255;
+
+    SnakeSegmentColor2.Red = 0;
+    SnakeSegmentColor2.Green = 0;
+    SnakeSegmentColor2.Blue = 200;
+    SnakeSegmentColor2.Alpha = 255;
 
     SKeyControls sKeys2;
 

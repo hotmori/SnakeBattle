@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <deque>
 #include "SnakeSegment.h"
 #include "Coin.h"
@@ -19,11 +19,18 @@ struct SKeyControls
     unsigned GoLeftKey;
 };
 
+struct SColor {
+    unsigned Red;
+    unsigned Green;
+    unsigned Blue;
+    unsigned Alpha;
+};
+
 class Snake
 {
 public:
-    Snake(unsigned headColor,
-          unsigned segmentColor,
+    Snake(SColor headColor,
+          SColor segmentColor,
           Coin* pCoin,
           SKeyControls sKeys,
           unsigned ID);
@@ -32,20 +39,18 @@ public:
     void Update(Snake* pAnotherSnake);
     bool IsDead();
     unsigned GetSize();
-    unsigned GetSegmentColor();
-    unsigned GetHeadColor();
     unsigned GetSegmentX(unsigned i);
     unsigned GetSegmentY(unsigned i);
     unsigned CheckForCollission(Snake* pSnake);
     void MoveThroughWall();
     void Kill();
     void CutTheTail();
+    SColor m_headColor;
+    SColor m_segmentColor;
 private:
     std::deque<SnakeSegment> m_Segments;
     Coin* m_pCoin;
     unsigned m_Direction;
-    unsigned headColor;
-    unsigned segmentColor;
     bool CollissionAnSnakeBlocked;
     void UpdateDirection();
     void addSegment(unsigned x, unsigned y);
