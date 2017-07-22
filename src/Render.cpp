@@ -53,15 +53,28 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 
     //Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
 
-    SDL_RenderCopy(m_Renderer, Message, NULL, &Message_rect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-/*    SDL_FreeSurface(surfaceMessage);
-*/
-    //Don't forget too free your surface and texture
+    int texW = 0;
+    int texH = 0;
+    SDL_QueryTexture(Message, NULL, NULL, &texW, &texH);
+    SDL_Rect dstrect = { 0, 0, texW, texH };
+
+    SDL_RenderCopy(m_Renderer, Message, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
     SDL_RenderPresent(m_Renderer);
     SDL_Delay(3000);
 
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
+
 }
-Render::~Render() {}
+Render::~Render() {
+
+
+
+    SDL_DestroyRenderer(m_Renderer);
+    SDL_DestroyWindow(m_pWindow);
+    TTF_Quit();
+    SDL_Quit();
+}
 
 void Render::RenderBackground ()
 {
