@@ -72,8 +72,10 @@ int main(int argc, char* argv[])
 
     Snake snake2(SnakeHeadColor2, SnakeSegmentColor2, &coin, sKeys2, 2);
 
+    long gl_counter = 0;
     while(isRunning)
     {
+        gl_counter++;
         //handle events
         while(SDL_PollEvent(&sdlEvent))
         {
@@ -102,6 +104,10 @@ int main(int argc, char* argv[])
             }
             break;
             }
+
+           // if (snake.IsDead() || snake2.IsDead()) {
+           //    render.RenderMessage(MSG_GAME_OVER);
+           // }
         }
         //Movements
 
@@ -113,10 +119,9 @@ int main(int argc, char* argv[])
             snake2.Update(&snake);
             time = 0;
         }
-
         //render game background
         render.RenderBackground();
-
+        render.RenderMessage(MSG_GAME_OVER);
         render.RenderObject(&snake);
         render.RenderObject(&snake2);
         render.RenderObject(&coin);

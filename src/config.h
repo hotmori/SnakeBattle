@@ -1,7 +1,7 @@
 #pragma once
 #define C_DELAY 10
 
-static const unsigned WINDOW_WIDTH = 1024;
+static const unsigned WINDOW_WIDTH = 1074;
 static const unsigned WINDOW_HEIGHT = 768;
 
 static const unsigned GO_UP = 0;
@@ -17,5 +17,9 @@ static const unsigned START_X = CELL_WIDTH / 2;
 static const unsigned START_Y = CELL_HEIGHT / 2;
 static const unsigned START_LENGTH = 4;
 
-static const unsigned RENDERING_TIMEOUT = 10;
+static const unsigned RENDERING_TIMEOUT = 5;
+
+static const unsigned MSG_GAME_START = 0;
+static const unsigned MSG_GAME_OVER = 1;
+
 
