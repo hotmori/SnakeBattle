@@ -29,11 +29,13 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 
 
     this->IniMessages();
-//TODO    SDL_DestroyTexture(Message);
+
 
 }
 Render::~Render() {
 
+
+    //TODO    SDL_DestroyTexture(Message);
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_pWindow);
     TTF_Quit();
@@ -42,43 +44,31 @@ Render::~Render() {
 
 void Render::IniMessages() {
 
-        TTF_Font* Sans = TTF_OpenFont("FreeSans.ttf", 24); //this opens a font style and sets a size
+     m_TextFont = TTF_OpenFont("FreeSans.ttf", 24); //this opens a font style and sets a size
 
-    if (Sans == NULL) {
+    if (m_TextFont == NULL) {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
                                  "Missing file",
                                  "File font is missing.",
                                  NULL);
     }
-    SDL_Color White = {255, 255, 255};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
+    m_TextColor = {255, 255, 255};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
 
 
-
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, "Start the game.", White); // as TTF_RenderText_Solid could only be used on SDL_Surface then you have to create the surface first
-
-    //SDL_Texture* Message = SDL_CreateTextureFromSurface(m_Renderer, surfaceMessage); //now you can convert it into a texture
-    m_MessageTextures[0] = SDL_CreateTextureFromSurface(m_Renderer, surfaceMessage);
-
-    SDL_Surface* surfaceMessage2 = TTF_RenderText_Solid(Sans, "Game over.", White);
-
-    m_MessageTextures[1] = SDL_CreateTextureFromSurface(m_Renderer, surfaceMessage2);
-    //Mind you that (0,0) is on the top left of the window/screen, think a rect as the text's box, that way it would be very simple to understance
-
-    //Now since it's a texture, you have to put RenderCopy in your game loop area, the area where the whole code executes
-
-    //int texW = 0;
-    //int texH = 0;
-    //SDL_QueryTexture(m_MessageTextures[0], NULL, NULL, &texW, &texH);
-    //SDL_Rect dstrect = { 0, 0, texW, texH };
-
-    //SDL_RenderCopy(m_Renderer, m_MessageTextures[0], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-    //SDL_RenderPresent(m_Renderer);
-    //SDL_Delay(3000);
-
-    SDL_FreeSurface(surfaceMessage);
-   // SDL_DestroyTexture(m_MessageTextures[0]);
+   m_MessageTextures[0] = this->CreateTextureForMessage("Game started.");
+   m_MessageTextures[1] = this->CreateTextureForMessage("Game is over.");
 
 }
+
+SDL_Texture* Render::CreateTextureForMessage(char* pTextMessage) {
+
+  SDL_Surface* pSurfaceMessage = TTF_RenderText_Solid(m_TextFont, pTextMessage, m_TextColor);
+  SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
+
+  SDL_FreeSurface(pSurfaceMessage);
+  return pTextureMessage;
+}
+
 
 void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
 
@@ -86,7 +76,7 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
     int texW = 0;
     int texH = 0;
     SDL_QueryTexture(m_MessageTextures[index], NULL, NULL, &texW, &texH);
-    SDL_Rect dstrect = { 0, 0, texW, texH };
+    SDL_Rect dstrect = { x, y, texW, texH };
 
     SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
