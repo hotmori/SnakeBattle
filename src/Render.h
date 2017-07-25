@@ -15,7 +15,7 @@ public:
     void RenderObject(Snake* pSnake);
     void RenderObject(Coin* pCoin);
     void RenderMessage(unsigned index, unsigned x = 0, unsigned y = 0);
-    SDL_Texture* CreateTextureForMessage(char* TextMessage);
+    SDL_Texture* CreateTextureForMessage(const char* TextMessage);
     void Display();
 private:
     void IniMessages();
@@ -26,5 +26,5 @@ private:
 
     TTF_Font* m_TextFont;
     SDL_Color m_TextColor;
-    SDL_Texture* m_MessageTextures[50];
+    SDL_Texture* m_MessageTextures[MSG_MAX_COUNT];
 };

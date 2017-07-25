@@ -19,7 +19,13 @@ static const unsigned START_LENGTH = 4;
 
 static const unsigned RENDERING_TIMEOUT = 5;
 
+//Text messages
+static const unsigned MSG_MAX_COUNT = 50;
+static const char MSG_FONT[] = "FreeSans.ttf";
+static const unsigned MSG_SIZE = 24;
 static const unsigned MSG_GAME_START = 0;
 static const unsigned MSG_GAME_OVER = 1;
+static const unsigned MSG_FIRST_PLAYER_WIN = 2;
+static const unsigned MSG_SECOND_PLAYER_WIN = 3;
 
 

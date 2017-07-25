@@ -27,15 +27,14 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
                   << SDL_GetError() << std::endl;
     }
 
-
     this->IniMessages();
-
 
 }
 Render::~Render() {
 
-
-    //TODO    SDL_DestroyTexture(Message);
+    for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
+        SDL_DestroyTexture(m_MessageTextures[i]);
+    }
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_pWindow);
     TTF_Quit();
@@ -44,7 +43,7 @@ Render::~Render() {
 
 void Render::IniMessages() {
 
-     m_TextFont = TTF_OpenFont("FreeSans.ttf", 24); //this opens a font style and sets a size
+     m_TextFont = TTF_OpenFont(MSG_FONT, MSG_SIZE);
 
     if (m_TextFont == NULL) {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
@@ -52,15 +51,19 @@ void Render::IniMessages() {
                                  "File font is missing.",
                                  NULL);
     }
-    m_TextColor = {255, 255, 255};  // this is the color in rgb format, maxing out all would give you the color white, and it will be your text's color
+   m_TextColor.r = 255;
+   m_TextColor.g = 255;
+   m_TextColor.b = 255;
+   m_TextColor.a = 127;
 
-
-   m_MessageTextures[0] = this->CreateTextureForMessage("Game started.");
-   m_MessageTextures[1] = this->CreateTextureForMessage("Game is over.");
+   m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
+   m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
+   m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win.");
+   m_MessageTextures[MSG_SECOND_PLAYER_WIN] = this->CreateTextureForMessage("Second player win.");
 
 }
 
-SDL_Texture* Render::CreateTextureForMessage(char* pTextMessage) {
+SDL_Texture* Render::CreateTextureForMessage(const char* pTextMessage) {
 
   SDL_Surface* pSurfaceMessage = TTF_RenderText_Solid(m_TextFont, pTextMessage, m_TextColor);
   SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
@@ -72,11 +75,14 @@ SDL_Texture* Render::CreateTextureForMessage(char* pTextMessage) {
 
 void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
 
-
     int texW = 0;
     int texH = 0;
     SDL_QueryTexture(m_MessageTextures[index], NULL, NULL, &texW, &texH);
-    SDL_Rect dstrect = { x, y, texW, texH };
+    SDL_Rect dstrect;
+    dstrect.h = texH;
+    dstrect.w = texW;
+    dstrect.x = x;
+    dstrect.y = y;
 
     SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
