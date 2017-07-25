@@ -55,7 +55,7 @@ void Render::IniMessages() {
    m_TextColor.r = 255;
    m_TextColor.g = 255;
    m_TextColor.b = 255;
-   m_TextColor.a = 127;
+   m_TextColor.a = 0;
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");

@@ -121,11 +121,12 @@ int main(int argc, char* argv[])
         }
         //render game background
         render.RenderBackground();
-        render.RenderMessage(MSG_GAME_OVER, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+
         render.RenderObject(&snake);
         render.RenderObject(&snake2);
         render.RenderObject(&coin);
 
+        render.RenderMessage(MSG_SECOND_PLAYER_WIN, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
         render.Display();
     }
     SDL_Quit();
