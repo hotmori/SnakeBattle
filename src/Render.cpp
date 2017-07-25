@@ -31,10 +31,11 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 
 }
 Render::~Render() {
-
+    /*TODO rewrite cleaner to avoid NULL pointer
     for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
         SDL_DestroyTexture(m_MessageTextures[i]);
     }
+    */
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_pWindow);
     TTF_Quit();
