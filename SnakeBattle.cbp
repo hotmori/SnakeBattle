@@ -55,8 +55,6 @@
 		</Linker>
 		<Unit filename="src/Coin.cpp" />
 		<Unit filename="src/Coin.h" />
-		<Unit filename="src/Message.cpp" />
-		<Unit filename="src/Message.h" />
 		<Unit filename="src/Render.cpp" />
 		<Unit filename="src/Render.h" />
 		<Unit filename="src/Snake.cpp" />
