@@ -27,74 +27,9 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
                   << SDL_GetError() << std::endl;
     }
 
-    this->IniMessages();
 
 }
-Render::~Render() {
-
-    for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
-        if (m_MessageTextures[i] != NULL) {
-            SDL_DestroyTexture(m_MessageTextures[i]);
-        }
-    }
-
-    SDL_DestroyRenderer(m_Renderer);
-    SDL_DestroyWindow(m_pWindow);
-    TTF_Quit();
-    SDL_Quit();
-}
-
-void Render::IniMessages() {
-
-     m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
-
-    if (m_TextFont == NULL) {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                                 "Missing file",
-                                 "File font is missing.",
-                                 NULL);
-    }
-   m_TextColor.r = 255;
-   m_TextColor.g = 255;
-   m_TextColor.b = 255;
-   m_TextColor.a = 0;
-
-   for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
-        m_MessageTextures[i] = NULL;
-   }
-
-   m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
-   m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
-   m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win!");
-   m_MessageTextures[MSG_SECOND_PLAYER_WIN] = this->CreateTextureForMessage("Second player win!");
-   m_MessageTextures[MSG_GAME_DRAW] = this->CreateTextureForMessage("Everybody won!");
-
-}
-
-SDL_Texture* Render::CreateTextureForMessage(const char* pTextMessage) {
-
-  SDL_Surface* pSurfaceMessage = TTF_RenderText_Blended(m_TextFont, pTextMessage, m_TextColor);
-  SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
-
-  SDL_FreeSurface(pSurfaceMessage);
-  return pTextureMessage;
-}
-
-
-void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
-
-    int texW = 0;
-    int texH = 0;
-    SDL_QueryTexture(m_MessageTextures[index], NULL, NULL, &texW, &texH);
-    SDL_Rect dstrect;
-    dstrect.h = texH;
-    dstrect.w = texW;
-    //center align
-    dstrect.x = x - texW/2;
-    dstrect.y = y - texH/2;
-
-    SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-}
+Render::~Render() {}
 
 void Render::RenderBackground ()
 {
