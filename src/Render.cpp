@@ -31,11 +31,13 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 
 }
 Render::~Render() {
-    /*TODO rewrite cleaner to avoid NULL pointer
+
     for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
-        SDL_DestroyTexture(m_MessageTextures[i]);
+        if (m_MessageTextures[i] != NULL) {
+            SDL_DestroyTexture(m_MessageTextures[i]);
+        }
     }
-    */
+
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_pWindow);
     TTF_Quit();
@@ -44,7 +46,7 @@ Render::~Render() {
 
 void Render::IniMessages() {
 
-     m_TextFont = TTF_OpenFont(MSG_FONT, MSG_SIZE);
+     m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
 
     if (m_TextFont == NULL) {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
@@ -57,10 +59,15 @@ void Render::IniMessages() {
    m_TextColor.b = 255;
    m_TextColor.a = 0;
 
+   for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
+        m_MessageTextures[i] = NULL;
+   }
+
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
-   m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win.");
-   m_MessageTextures[MSG_SECOND_PLAYER_WIN] = this->CreateTextureForMessage("Second player win.");
+   m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win!");
+   m_MessageTextures[MSG_SECOND_PLAYER_WIN] = this->CreateTextureForMessage("Second player win!");
+   m_MessageTextures[MSG_GAME_DRAW] = this->CreateTextureForMessage("Everybody won!");
 
 }
 
@@ -82,8 +89,9 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
     SDL_Rect dstrect;
     dstrect.h = texH;
     dstrect.w = texW;
-    dstrect.x = x;
-    dstrect.y = y;
+    //center align
+    dstrect.x = x - texW/2;
+    dstrect.y = y - texH/2;
 
     SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }

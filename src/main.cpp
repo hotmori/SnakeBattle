@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     sKeys.GoRightKey = SDLK_RIGHT;
     sKeys.GoLeftKey = SDLK_LEFT;
 
-    Snake snake(SnakeHeadColor, SnakeSegmentColor, &coin, sKeys, 1);
+    Snake snake(SnakeHeadColor, SnakeSegmentColor, &coin, sKeys, FIRST_PLAYER_ID);
 
     //Second snake
 
@@ -70,12 +70,10 @@ int main(int argc, char* argv[])
     sKeys2.GoRightKey = SDLK_d;
     sKeys2.GoLeftKey = SDLK_a;
 
-    Snake snake2(SnakeHeadColor2, SnakeSegmentColor2, &coin, sKeys2, 2);
+    Snake snake2(SnakeHeadColor2, SnakeSegmentColor2, &coin, sKeys2, SECOND_PLAYER_ID);
 
-    long gl_counter = 0;
     while(isRunning)
     {
-        gl_counter++;
         //handle events
         while(SDL_PollEvent(&sdlEvent))
         {
@@ -104,10 +102,6 @@ int main(int argc, char* argv[])
             }
             break;
             }
-
-           // if (snake.IsDead() || snake2.IsDead()) {
-           //    render.RenderMessage(MSG_GAME_OVER);
-           // }
         }
         //Movements
 
@@ -126,7 +120,15 @@ int main(int argc, char* argv[])
         render.RenderObject(&snake2);
         render.RenderObject(&coin);
 
-        render.RenderMessage(MSG_SECOND_PLAYER_WIN, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+        if (snake.IsDead() && snake2.IsDead()) {
+            render.RenderMessage(MSG_GAME_DRAW);
+        }
+        else if (snake.IsDead()) {
+            render.RenderMessage(MSG_SECOND_PLAYER_WIN);
+        }
+        else if (snake2.IsDead()) {
+            render.RenderMessage(MSG_FIRST_PLAYER_WIN);
+        }
         render.Display();
     }
     SDL_Quit();

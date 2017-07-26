@@ -14,7 +14,7 @@ public:
     void RenderBackground( );
     void RenderObject(Snake* pSnake);
     void RenderObject(Coin* pCoin);
-    void RenderMessage(unsigned index, unsigned x = 0, unsigned y = 0);
+    void RenderMessage(unsigned index, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
     SDL_Texture* CreateTextureForMessage(const char* TextMessage);
     void Display();
 private:
