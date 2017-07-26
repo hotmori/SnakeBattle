@@ -73,7 +73,7 @@ void Render::IniMessages() {
 
 SDL_Texture* Render::CreateTextureForMessage(const char* pTextMessage) {
 
-  SDL_Surface* pSurfaceMessage = TTF_RenderText_Solid(m_TextFont, pTextMessage, m_TextColor);
+  SDL_Surface* pSurfaceMessage = TTF_RenderText_Blended(m_TextFont, pTextMessage, m_TextColor);
   SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
 
   SDL_FreeSurface(pSurfaceMessage);
