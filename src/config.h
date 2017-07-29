@@ -1,7 +1,7 @@
 #pragma once
 #define C_DELAY 10
 
-static const unsigned WINDOW_WIDTH = 1024;
+const unsigned WINDOW_WIDTH = 1024;
 static const unsigned WINDOW_HEIGHT = 768;
 
 static const unsigned GO_UP = 0;

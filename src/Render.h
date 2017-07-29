@@ -1,9 +1,11 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <map>
 
 #include "Snake.h"
 #include "config.h"
+#include "Message.h"
 
 class Render
 {
@@ -16,6 +18,7 @@ public:
     void RenderObject(Coin* pCoin);
     void RenderMessage(unsigned index, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
     SDL_Texture* CreateTextureForMessage(const char* TextMessage);
+    SDL_Texture* CreateTexture(Message *pMessage);
     void Display();
 private:
     void IniMessages();
