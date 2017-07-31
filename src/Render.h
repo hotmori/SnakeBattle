@@ -2,6 +2,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <map>
+#include <string>
 
 #include "Snake.h"
 #include "config.h"

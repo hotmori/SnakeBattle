@@ -3,6 +3,10 @@
 Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 {
 
+   // This line is only needed, if you want debug the program
+   //TODO
+   SDL_SetHint(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
+
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         std::cerr << "SDL_Init Failed: "
@@ -72,7 +76,6 @@ void Render::IniMessages() {
 
    //MessageTextureMap.insert(std::make_pair(m1, t));
    MessageTextureMap[m1] = this->CreateTexture(&m1);
-   MessageTextureMap[m2] = this->CreateTexture(&m2);
 
    int texW = 0;
    int texH = 0;
@@ -88,10 +91,38 @@ void Render::IniMessages() {
 
    SDL_RenderCopy(m_Renderer, MessageTextureMap[m1], NULL, &dstrect);
    SDL_RenderPresent(m_Renderer);
-   SDL_Delay(2000);
-   //SDL_RenderCopy(m_Renderer, MessageTextureMap[m2], NULL, &dstrect);
-   //SDL_RenderPresent(m_Renderer);
-   //SDL_Delay(2000);
+   SDL_Delay(2001);
+
+//   std::string s = std::to_string(1);
+//   char const *pchar = s.c_str();  //use char const* as target type
+   char buffer [33];
+   itoa(MessageTextureMap.size(), buffer, 10);
+   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                                 "Debug 1",
+                                 buffer,
+                                 NULL);
+   //2
+   MessageTextureMap[m2] = this->CreateTexture(&m2);
+
+   itoa(MessageTextureMap.size(), buffer, 10);
+   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+                                 "Debug 2",
+                                 buffer,
+                                 NULL);
+   texW = 0;
+   texH = 0;
+
+   SDL_QueryTexture(MessageTextureMap[m2], NULL, NULL, &texW, &texH);
+
+   dstrect.h = texH;
+   dstrect.w = texW;
+   //center align
+   dstrect.x = 0;
+   dstrect.y = 0;
+
+   SDL_RenderCopy(m_Renderer, MessageTextureMap[m2], NULL, &dstrect);
+   SDL_RenderPresent(m_Renderer);
+   SDL_Delay(2001);
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
