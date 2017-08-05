@@ -120,6 +120,23 @@ int main(int argc, char* argv[])
         render.RenderObject(&snake2);
         render.RenderObject(&coin);
 
+        //loop through messages
+        for (std::map<Message, SDL_Texture*>::iterator it=render.MessageTextureMap.begin();
+             it!=render.MessageTextureMap.end();
+              ++it)
+        {
+            //Message* msg;
+            //*msg = it->first;
+            //it->first;
+            //SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "loop", it->first.m_Text, NULL);
+             render.RenderMessage((Message *)&it->first);
+           //  SDL_Delay(3000);
+          //std::cout << it->first << '\n';
+        }
+
+
+        //
+
         if (snake.IsDead() && snake2.IsDead()) {
             render.RenderMessage(MSG_GAME_DRAW);
         }

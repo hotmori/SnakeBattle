@@ -50,7 +50,7 @@ Render::~Render() {
 
 void Render::IniMessages() {
 
-     m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
+   m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
 
     if (m_TextFont == NULL) {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
@@ -66,63 +66,12 @@ void Render::IniMessages() {
    for (unsigned i=0; i < (MSG_MAX_COUNT-1); i++) {
         m_MessageTextures[i] = NULL;
    }
-   //typedef struct txt SDL_Texture;
 
-   //std::map<Message, int> MessageTextureMap;
-   std::map<Message, SDL_Texture*> MessageTextureMap;
-
-   Message m1(m_TextFont, m_TextColor, (char*)"Cached message.");
+   Message m1(m_TextFont, m_TextColor, (char*)"Cached message1.");
    Message m2(m_TextFont, m_TextColor, (char*)"Cached message2.");
 
-   //MessageTextureMap.insert(std::make_pair(m1, t));
    MessageTextureMap[m1] = this->CreateTexture(&m1);
-
-   int texW = 0;
-   int texH = 0;
-
-   SDL_QueryTexture(MessageTextureMap[m1], NULL, NULL, &texW, &texH);
-   SDL_Rect dstrect;
-
-   dstrect.h = texH;
-   dstrect.w = texW;
-   //center align
-   dstrect.x = 0;
-   dstrect.y = 0;
-
-   SDL_RenderCopy(m_Renderer, MessageTextureMap[m1], NULL, &dstrect);
-   SDL_RenderPresent(m_Renderer);
-   SDL_Delay(2001);
-
-//   std::string s = std::to_string(1);
-//   char const *pchar = s.c_str();  //use char const* as target type
-   char buffer [33];
-   itoa(MessageTextureMap.size(), buffer, 10);
-   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                                 "Debug 1",
-                                 buffer,
-                                 NULL);
-   //2
    MessageTextureMap[m2] = this->CreateTexture(&m2);
-
-   itoa(MessageTextureMap.size(), buffer, 10);
-   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                                 "Debug 2",
-                                 buffer,
-                                 NULL);
-   texW = 0;
-   texH = 0;
-
-   SDL_QueryTexture(MessageTextureMap[m2], NULL, NULL, &texW, &texH);
-
-   dstrect.h = texH;
-   dstrect.w = texW;
-   //center align
-   dstrect.x = 0;
-   dstrect.y = 0;
-
-   SDL_RenderCopy(m_Renderer, MessageTextureMap[m2], NULL, &dstrect);
-   SDL_RenderPresent(m_Renderer);
-   SDL_Delay(2001);
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
@@ -166,13 +115,13 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
     SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
 
-/*
+
 void Render::RenderMessage(Message* pMessage, unsigned x, unsigned y) {
 
     int texW = 0;
     int texH = 0;
 
-    SDL_QueryTexture(MessageTextureMap, NULL, NULL, &texW, &texH);
+    SDL_QueryTexture(MessageTextureMap[*pMessage], NULL, NULL, &texW, &texH);
     SDL_Rect dstrect;
     dstrect.h = texH;
     dstrect.w = texW;
@@ -180,9 +129,9 @@ void Render::RenderMessage(Message* pMessage, unsigned x, unsigned y) {
     dstrect.x = x - texW/2;
     dstrect.y = y - texH/2;
 
-    SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
+    SDL_RenderCopy(m_Renderer, MessageTextureMap[*pMessage], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
-*/
+
 
 void Render::RenderBackground ()
 {
