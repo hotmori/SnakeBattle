@@ -44,6 +44,8 @@ Render::~Render() {
 
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_pWindow);
+
+    TTF_CloseFont(m_TextFont);
     TTF_Quit();
     SDL_Quit();
 }
@@ -70,8 +72,10 @@ void Render::IniMessages() {
    Message m1(m_TextFont, m_TextColor, (char*)"Cached message1.");
    Message m2(m_TextFont, m_TextColor, (char*)"Cached message2.");
 
-   MessageTextureMap[m1] = this->CreateTexture(&m1);
-   MessageTextureMap[m2] = this->CreateTexture(&m2);
+   SDL_Texture* t1 = this->CreateTexture(&m1);
+
+   //MessageTextureMap[m1] = this->CreateTexture(&m1);
+   //MessageTextureMap[m2] = this->CreateTexture(&m2);
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
@@ -92,7 +96,10 @@ SDL_Texture* Render::CreateTextureForMessage(const char* pTextMessage) {
 
 SDL_Texture* Render::CreateTexture(Message *pMessage) {
 
-  SDL_Surface* pSurfaceMessage = TTF_RenderText_Blended(pMessage->m_pFont, pMessage->m_Text, pMessage->m_Color);
+  SDL_Surface* pSurfaceMessage;
+  pSurfaceMessage = TTF_RenderText_Blended(pMessage->m_pFont, pMessage->m_Text, pMessage->m_Color);
+
+
   SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
 
   SDL_FreeSurface(pSurfaceMessage);
