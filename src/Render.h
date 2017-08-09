@@ -18,9 +18,9 @@ public:
     void RenderObject(Snake* pSnake);
     void RenderObject(Coin* pCoin);
     void RenderMessage(unsigned index, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
-    void RenderMessage(Message* pMessage, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
+    void RenderMessage(Message &message, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
     SDL_Texture* CreateTextureForMessage(const char* TextMessage);
-    SDL_Texture* CreateTexture(Message *pMessage);
+    SDL_Texture* CreateTexture(Message &message);
     std::map<Message, SDL_Texture*> MessageTextureMap;
     void Display();
 private:

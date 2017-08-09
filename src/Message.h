@@ -18,7 +18,7 @@ public:
     bool operator <(const Message& msg) const
     {
         //return id < rhs.id;
-        unsigned str_flg = strcmp(m_Text, msg.m_Text);
+        int str_flg = strcmp(m_Text, msg.m_Text);
         return (str_flg == 0) ? false : true;
         /*
         return (strcmp(m_Text, msg.m_Text)

@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
             //*msg = it->first;
             //it->first;
             //SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "loop", it->first.m_Text, NULL);
-             render.RenderMessage((Message *)&it->first);
+             render.RenderMessage((Message&)it->first);
            //  SDL_Delay(3000);
           //std::cout << it->first << '\n';
         }

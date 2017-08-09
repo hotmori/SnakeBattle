@@ -72,10 +72,10 @@ void Render::IniMessages() {
    Message m1(m_TextFont, m_TextColor, (char*)"Cached message1.");
    Message m2(m_TextFont, m_TextColor, (char*)"Cached message2.");
 
-   SDL_Texture* t1 = this->CreateTexture(&m1);
-
-   //MessageTextureMap[m1] = this->CreateTexture(&m1);
-   //MessageTextureMap[m2] = this->CreateTexture(&m2);
+   SDL_Texture* t1 = this->CreateTexture(m1);
+   SDL_Texture* t2 = this->CreateTexture(m2);
+   MessageTextureMap[m1] = t1;
+   MessageTextureMap[m2] = t2;
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
@@ -94,10 +94,10 @@ SDL_Texture* Render::CreateTextureForMessage(const char* pTextMessage) {
   return pTextureMessage;
 }
 
-SDL_Texture* Render::CreateTexture(Message *pMessage) {
+SDL_Texture* Render::CreateTexture(Message &message) {
 
   SDL_Surface* pSurfaceMessage;
-  pSurfaceMessage = TTF_RenderText_Blended(pMessage->m_pFont, pMessage->m_Text, pMessage->m_Color);
+  pSurfaceMessage = TTF_RenderText_Blended(message.m_pFont, message.m_Text, message.m_Color);
 
 
   SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
@@ -123,12 +123,13 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
 }
 
 
-void Render::RenderMessage(Message* pMessage, unsigned x, unsigned y) {
+void Render::RenderMessage(Message &message, unsigned x, unsigned y) {
 
     int texW = 0;
     int texH = 0;
-
-    SDL_QueryTexture(MessageTextureMap[*pMessage], NULL, NULL, &texW, &texH);
+    //TODO null pointer is here for second message
+    SDL_Texture* pTexture = MessageTextureMap[message];
+    SDL_QueryTexture(pTexture, NULL, NULL, &texW, &texH);
     SDL_Rect dstrect;
     dstrect.h = texH;
     dstrect.w = texW;
@@ -136,7 +137,7 @@ void Render::RenderMessage(Message* pMessage, unsigned x, unsigned y) {
     dstrect.x = x - texW/2;
     dstrect.y = y - texH/2;
 
-    SDL_RenderCopy(m_Renderer, MessageTextureMap[*pMessage], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
+    SDL_RenderCopy(m_Renderer, pTexture, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
 
 
