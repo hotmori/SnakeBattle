@@ -19,7 +19,8 @@ public:
     {
         //return id < rhs.id;
         int str_flg = strcmp(m_Text, msg.m_Text);
-        return (str_flg == 0) ? false : true;
+        bool result = (str_flg == 0) ? false : true;
+        return result;
         /*
         return (strcmp(m_Text, msg.m_Text)
                && (m_Color.r == msg.m_Color.r

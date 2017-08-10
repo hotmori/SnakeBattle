@@ -74,8 +74,11 @@ void Render::IniMessages() {
 
    SDL_Texture* t1 = this->CreateTexture(m1);
    SDL_Texture* t2 = this->CreateTexture(m2);
-   MessageTextureMap[m1] = t1;
-   MessageTextureMap[m2] = t2;
+   bool insert_flg1 = false;
+   bool insert_flg2 = false;
+   insert_flg1 = (MessageTextureMap[m1] = t1);
+   insert_flg2 = (MessageTextureMap[m2] = t2);
+   //MessageTextureMap[m2] = t2;
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
@@ -128,16 +131,24 @@ void Render::RenderMessage(Message &message, unsigned x, unsigned y) {
     int texW = 0;
     int texH = 0;
     //TODO null pointer is here for second message
-    SDL_Texture* pTexture = MessageTextureMap[message];
-    SDL_QueryTexture(pTexture, NULL, NULL, &texW, &texH);
-    SDL_Rect dstrect;
-    dstrect.h = texH;
-    dstrect.w = texW;
-    //center align
-    dstrect.x = x - texW/2;
-    dstrect.y = y - texH/2;
+    bool exist = MessageTextureMap.count(message);
+    std::map<Message, SDL_Texture*>::const_iterator pos = MessageTextureMap.find(message);
+    if (pos == MessageTextureMap.end()) {
+    //handle the error
+    } else {
+     SDL_Texture* pTexture =  pos->second;
+     SDL_QueryTexture(pTexture, NULL, NULL, &texW, &texH);
+     SDL_Rect dstrect;
+     dstrect.h = texH;
+     dstrect.w = texW;
+     //center align
+     dstrect.x = x - texW/2;
+     dstrect.y = y - texH/2;
 
-    SDL_RenderCopy(m_Renderer, pTexture, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
+     SDL_RenderCopy(m_Renderer, pTexture, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
+    }
+
+
 }
 
 
