@@ -71,13 +71,34 @@ void Render::IniMessages() {
 
    Message m1(m_TextFont, m_TextColor, (char*)"Cached message1.");
    Message m2(m_TextFont, m_TextColor, (char*)"Cached message2.");
+   Message m3(m_TextFont, m_TextColor, (char*)"Cached message3.");
 
    SDL_Texture* t1 = this->CreateTexture(m1);
    SDL_Texture* t2 = this->CreateTexture(m2);
+   SDL_Texture* t3 = this->CreateTexture(m3);
    bool insert_flg1 = false;
    bool insert_flg2 = false;
+   bool insert_flg3 = false;
    insert_flg1 = (MessageTextureMap[m1] = t1);
    insert_flg2 = (MessageTextureMap[m2] = t2);
+   insert_flg3 = (MessageTextureMap[m3] = t3);
+
+
+    for (std::map<Message, SDL_Texture*>::iterator it=MessageTextureMap.begin();
+         it!=MessageTextureMap.end();
+          ++it)
+    {
+        //int i =0;
+        //int &ri = i;
+        SDL_Texture *pTexture = NULL;
+        Message &rMessage = (Message&)it->first;
+        pTexture = it->second;
+         std::cout << rMessage.m_Text;
+         //Message &rMessage = &it->first;
+         //it->first;
+        // it->second;
+    }
+
    //MessageTextureMap[m2] = t2;
 
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");

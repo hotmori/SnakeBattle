@@ -22,6 +22,8 @@ static const unsigned START_LENGTH = 4;
 
 static const unsigned RENDERING_TIMEOUT = 5;
 
+static const char LOG_FILE_NAME[] = "LOG.txt";
+
 //Text messages
 static const unsigned MSG_MAX_COUNT = 10;
 static const char MSG_FONT[] = "FreeSans.ttf";

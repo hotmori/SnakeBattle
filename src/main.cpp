@@ -1,6 +1,6 @@
 #include <iostream>
 #include <deque>
-
+#include <stdio.h>
 #include <SDL.h>
 
 #include "SnakeSegment.h"
@@ -8,9 +8,24 @@
 #include "config.h"
 #include "Snake.h"
 #include "Render.h"
+#include "Logger.h"
 
 int main(int argc, char* argv[])
 {
+   /*
+   FILE * pFile;
+   int n;
+   char name [100];
+
+   pFile = fopen ("myfile.txt","w");
+
+   fprintf (pFile, "Hello log world %d", 1);
+   fclose (pFile);
+   */
+   Logger::ResetLog();
+   Logger::PrintLog("Hello log world %d", 2);
+   Logger::PrintLog("Hello log world %d", 3);
+
     unsigned time = 0;
 
     SDL_Event sdlEvent;
