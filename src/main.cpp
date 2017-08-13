@@ -12,19 +12,10 @@
 
 int main(int argc, char* argv[])
 {
-   /*
-   FILE * pFile;
-   int n;
-   char name [100];
 
-   pFile = fopen ("myfile.txt","w");
-
-   fprintf (pFile, "Hello log world %d", 1);
-   fclose (pFile);
-   */
    Logger::ResetLog();
-   Logger::PrintLog("Hello log world %d", 2);
-   Logger::PrintLog("Hello log world %d", 3);
+
+   LOG("Starting the game %s", __FUNCTION__);
 
     unsigned time = 0;
 

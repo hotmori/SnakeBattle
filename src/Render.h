@@ -7,6 +7,7 @@
 #include "Snake.h"
 #include "config.h"
 #include "Message.h"
+#include "Logger.h"
 
 class Render
 {

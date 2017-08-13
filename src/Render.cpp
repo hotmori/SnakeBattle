@@ -52,6 +52,8 @@ Render::~Render() {
 
 void Render::IniMessages() {
 
+   LOG("%s ", __FUNCTION__);
+
    m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
 
     if (m_TextFont == NULL) {
@@ -76,14 +78,22 @@ void Render::IniMessages() {
    SDL_Texture* t1 = this->CreateTexture(m1);
    SDL_Texture* t2 = this->CreateTexture(m2);
    SDL_Texture* t3 = this->CreateTexture(m3);
-   bool insert_flg1 = false;
-   bool insert_flg2 = false;
-   bool insert_flg3 = false;
-   insert_flg1 = (MessageTextureMap[m1] = t1);
-   insert_flg2 = (MessageTextureMap[m2] = t2);
-   insert_flg3 = (MessageTextureMap[m3] = t3);
 
 
+   LOG("After creation t1: %d, t2: %d, t3: %d", t1, t2, t3);
+
+   MessageTextureMap[m1] = t1;
+   MessageTextureMap[m2] = t2;
+   MessageTextureMap[m3] = t3;
+
+   //bool insert_flg1 = false;
+   //bool insert_flg2 = false;
+   //bool insert_flg3 = false;
+   //insert_flg1 = (MessageTextureMap[m1] = t1);
+   //insert_flg2 = (MessageTextureMap[m2] = t2);
+   //insert_flg3 = (MessageTextureMap[m3] = t3);
+
+    LOG("Map size: %d", MessageTextureMap.size());
     for (std::map<Message, SDL_Texture*>::iterator it=MessageTextureMap.begin();
          it!=MessageTextureMap.end();
           ++it)
@@ -93,7 +103,7 @@ void Render::IniMessages() {
         SDL_Texture *pTexture = NULL;
         Message &rMessage = (Message&)it->first;
         pTexture = it->second;
-         std::cout << rMessage.m_Text;
+        LOG("Loop through map text: %s, %d", rMessage.m_Text, pTexture);
          //Message &rMessage = &it->first;
          //it->first;
         // it->second;

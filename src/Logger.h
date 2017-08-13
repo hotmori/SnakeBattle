@@ -1,8 +1,11 @@
+#pragma once
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
+
 #include "config.h"
 
-#include <string.h>
+#define LOG Logger::PrintLog
 
 class Logger {
   public:
@@ -19,10 +22,7 @@ class Logger {
      static void PrintLog(const char* format, ...)
      {
 
-     // if (pFile == NULL)
-    //  {
-          pFile = fopen(LOG_FILE_NAME,"a");
-     // }
+      pFile = fopen(LOG_FILE_NAME,"a");
 
       char buffer[256];
       va_list args;
@@ -38,3 +38,6 @@ class Logger {
     };
 
 };
+
+
+//LOG(msg) std::cout << "[LOG] (" __FILE__ ":" << __LINE__ << ") from " << __func__ << "()\n    " << msg << "\n";
