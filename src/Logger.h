@@ -38,6 +38,3 @@ class Logger {
     };
 
 };
-
-
-//LOG(msg) std::cout << "[LOG] (" __FILE__ ":" << __LINE__ << ") from " << __func__ << "()\n    " << msg << "\n";

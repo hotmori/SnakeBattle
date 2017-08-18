@@ -1,21 +1,15 @@
 #pragma once
 #include <cstdlib>
-
-struct CColor {
-    unsigned Red;
-    unsigned Green;
-    unsigned Blue;
-    unsigned Alpha;
-};
+#include <SDL.h>
 
 class Coin
 {
 public:
-    Coin(CColor coinColor);
+    Coin(SDL_Color coinColor);
     void Respawn();
     unsigned GetX();
     unsigned GetY();
-    CColor m_CoinColor;
+    SDL_Color m_CoinColor;
     bool IsAvailable();
     void Remove();
 private:

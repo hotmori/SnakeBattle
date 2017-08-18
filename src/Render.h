@@ -22,10 +22,10 @@ public:
     void RenderMessage(Message &message, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
     SDL_Texture* CreateTextureForMessage(const char* TextMessage);
     SDL_Texture* CreateTexture(Message &message);
-    std::map<Message, SDL_Texture*> MessageTextureMap;
     void Display();
+    void IniMessageTextures(Snake* pSnake1, Snake* pSnake2);
 private:
-    void IniMessages();
+
     SDL_Renderer* m_Renderer;
     SDL_Window *m_pWindow;
 

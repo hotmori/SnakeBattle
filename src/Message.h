@@ -12,25 +12,8 @@ public:
     TTF_Font* m_pFont;
     SDL_Color m_Color;
     char* m_Text;
-    //SDL_Texture* CreateTextureForMessage(SDL_Renderer* pRenderer);
+    SDL_Texture* m_pTexture;
 
-    //operator is defined for map
-    bool operator <(const Message& msg) const
-    {
-        //return id < rhs.id;
-        int str_flg = strcmp(m_Text, msg.m_Text);
-        bool result = (str_flg == 0) ? false : true;
-        return result;
-        /*
-        return (strcmp(m_Text, msg.m_Text)
-               && (m_Color.r == msg.m_Color.r
-                   && m_Color.g == msg.m_Color.g
-                   && m_Color.b == msg.m_Color.b
-                   && m_Color.a == msg.m_Color.a))
-                //TODO add font comparison
-                  ;
-       */
-    }
 
 private:
 

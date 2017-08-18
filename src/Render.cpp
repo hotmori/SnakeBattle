@@ -31,8 +31,6 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
                   << SDL_GetError() << std::endl;
     }
 
-    this->IniMessages();
-
 }
 Render::~Render() {
 
@@ -50,7 +48,7 @@ Render::~Render() {
     SDL_Quit();
 }
 
-void Render::IniMessages() {
+void Render::IniMessageTextures(Snake* pSnake1, Snake* pSnake2) {
 
    LOG("%s ", __FUNCTION__);
 
@@ -71,46 +69,15 @@ void Render::IniMessages() {
         m_MessageTextures[i] = NULL;
    }
 
-   Message m1(m_TextFont, m_TextColor, (char*)"Cached message1.");
-   Message m2(m_TextFont, m_TextColor, (char*)"Cached message2.");
-   Message m3(m_TextFont, m_TextColor, (char*)"Cached message3.");
 
-   SDL_Texture* t1 = this->CreateTexture(m1);
-   SDL_Texture* t2 = this->CreateTexture(m2);
-   SDL_Texture* t3 = this->CreateTexture(m3);
+   Message m_plus_1(m_TextFont, pSnake1->m_segmentColor, "+1");
+   m_MessageTextures[MSG_PLUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_plus_1);
+  /*
+   Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, "-1");
 
-
-   LOG("After creation t1: %d, t2: %d, t3: %d", t1, t2, t3);
-
-   MessageTextureMap[m1] = t1;
-   MessageTextureMap[m2] = t2;
-   MessageTextureMap[m3] = t3;
-
-   //bool insert_flg1 = false;
-   //bool insert_flg2 = false;
-   //bool insert_flg3 = false;
-   //insert_flg1 = (MessageTextureMap[m1] = t1);
-   //insert_flg2 = (MessageTextureMap[m2] = t2);
-   //insert_flg3 = (MessageTextureMap[m3] = t3);
-
-    LOG("Map size: %d", MessageTextureMap.size());
-    for (std::map<Message, SDL_Texture*>::iterator it=MessageTextureMap.begin();
-         it!=MessageTextureMap.end();
-          ++it)
-    {
-        //int i =0;
-        //int &ri = i;
-        SDL_Texture *pTexture = NULL;
-        Message &rMessage = (Message&)it->first;
-        pTexture = it->second;
-        LOG("Loop through map text: %s, %d", rMessage.m_Text, pTexture);
-         //Message &rMessage = &it->first;
-         //it->first;
-        // it->second;
-    }
-
-   //MessageTextureMap[m2] = t2;
-
+   Message m_plus_2(m_TextFont, pSnake2->m_segmentColor, "+1");
+   Message m_minus_2(m_TextFont, pSnake2->m_segmentColor, "-1");
+*/
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
    m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win!");
@@ -156,31 +123,30 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
     SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
 
-
+/*
 void Render::RenderMessage(Message &message, unsigned x, unsigned y) {
+
+    if (message.m_pTexture == NULL) {
+
+        message.m_pTexture = this->CreateTexture(message);
+    }
 
     int texW = 0;
     int texH = 0;
     //TODO null pointer is here for second message
-    bool exist = MessageTextureMap.count(message);
-    std::map<Message, SDL_Texture*>::const_iterator pos = MessageTextureMap.find(message);
-    if (pos == MessageTextureMap.end()) {
-    //handle the error
-    } else {
-     SDL_Texture* pTexture =  pos->second;
-     SDL_QueryTexture(pTexture, NULL, NULL, &texW, &texH);
-     SDL_Rect dstrect;
-     dstrect.h = texH;
-     dstrect.w = texW;
+    SDL_Texture* pTexture =  message.m_pTexture;
+    SDL_QueryTexture(pTexture, NULL, NULL, &texW, &texH);
+    SDL_Rect dstrect;
+    dstrect.h = texH;
+    dstrect.w = texW;
      //center align
-     dstrect.x = x - texW/2;
-     dstrect.y = y - texH/2;
+    dstrect.x = x - texW/2;
+    dstrect.y = y - texH/2;
 
-     SDL_RenderCopy(m_Renderer, pTexture, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-    }
-
+    SDL_RenderCopy(m_Renderer, pTexture, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 
 }
+*/
 
 
 void Render::RenderBackground ()
@@ -204,10 +170,10 @@ void Render::RenderObject(Snake* pSnake)
     m_RenderRect.x = pSnake->GetSegmentX(0) * CELL_SIZE;
     m_RenderRect.y = pSnake->GetSegmentY(0) * CELL_SIZE;
 
-    SDL_SetRenderDrawColor(m_Renderer, pSnake->m_headColor.Red,
-                                       pSnake->m_headColor.Green,
-                                       pSnake->m_headColor.Blue,
-                                       pSnake->m_headColor.Alpha);
+    SDL_SetRenderDrawColor(m_Renderer, pSnake->m_headColor.r,
+                                       pSnake->m_headColor.g,
+                                       pSnake->m_headColor.b,
+                                       pSnake->m_headColor.a);
 
     SDL_RenderFillRect(m_Renderer, &m_RenderRect);
 
@@ -216,10 +182,10 @@ void Render::RenderObject(Snake* pSnake)
         m_RenderRect.x = pSnake->GetSegmentX(i) * CELL_SIZE;
         m_RenderRect.y = pSnake->GetSegmentY(i) * CELL_SIZE;
 
-        SDL_SetRenderDrawColor(m_Renderer, pSnake->m_segmentColor.Red,
-                                           pSnake->m_segmentColor.Green,
-                                           pSnake->m_segmentColor.Blue,
-                                           pSnake->m_segmentColor.Alpha);
+        SDL_SetRenderDrawColor(m_Renderer, pSnake->m_segmentColor.r,
+                                           pSnake->m_segmentColor.g,
+                                           pSnake->m_segmentColor.b,
+                                           pSnake->m_segmentColor.a);
 
         SDL_RenderFillRect(m_Renderer, &m_RenderRect);
     }
@@ -240,10 +206,10 @@ void Render::RenderObject(Coin* pCoin)
     m_RenderRect.x = pCoin->GetX() * CELL_SIZE;
     m_RenderRect.y = pCoin->GetY() * CELL_SIZE;
 
-    SDL_SetRenderDrawColor(m_Renderer, pCoin->m_CoinColor.Red,
-                                       pCoin->m_CoinColor.Green,
-                                       pCoin->m_CoinColor.Blue,
-                                       pCoin->m_CoinColor.Alpha);
+    SDL_SetRenderDrawColor(m_Renderer, pCoin->m_CoinColor.r,
+                                       pCoin->m_CoinColor.g,
+                                       pCoin->m_CoinColor.b,
+                                       pCoin->m_CoinColor.a);
 
     SDL_RenderFillRect(m_Renderer, &m_RenderRect);
 }

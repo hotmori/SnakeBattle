@@ -33,5 +33,7 @@ static const unsigned MSG_GAME_OVER = 1;
 static const unsigned MSG_FIRST_PLAYER_WIN = 2;
 static const unsigned MSG_SECOND_PLAYER_WIN = 3;
 static const unsigned MSG_GAME_DRAW = 4;
-
-
+static const unsigned MSG_PLUS_SCORE_FIRST_PLAYER = 5;
+static const unsigned MSG_MINUS_SCORE_FIRST_PLAYER = 6;
+static const unsigned MSG_PLUS_SCORE_SECOND_PLAYER = 7;
+static const unsigned MSG_MINUS_SCORE_SECOND_PLAYER = 8;

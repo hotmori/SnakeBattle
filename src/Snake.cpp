@@ -1,7 +1,7 @@
 #include "Snake.h"
 
-Snake::Snake(SColor headColor,
-             SColor segmentColor,
+Snake::Snake(SDL_Color headColor,
+             SDL_Color segmentColor,
              Coin* pCoin,
              SKeyControls sKeys,
              unsigned ID)

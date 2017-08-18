@@ -18,19 +18,19 @@ struct SKeyControls
     unsigned GoRightKey;
     unsigned GoLeftKey;
 };
-
-struct SColor {
+/*
+struct SDL_Color {
     unsigned Red;
     unsigned Green;
     unsigned Blue;
     unsigned Alpha;
 };
-
+*/
 class Snake
 {
 public:
-    Snake(SColor headColor,
-          SColor segmentColor,
+    Snake(SDL_Color headColor,
+          SDL_Color segmentColor,
           Coin* pCoin,
           SKeyControls sKeys,
           unsigned ID);
@@ -45,8 +45,8 @@ public:
     void MoveThroughWall();
     void Kill();
     void CutTheTail();
-    SColor m_headColor;
-    SColor m_segmentColor;
+    SDL_Color m_headColor;
+    SDL_Color m_segmentColor;
 private:
     std::deque<SnakeSegment> m_Segments;
     Coin* m_pCoin;
