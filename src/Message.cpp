@@ -4,7 +4,7 @@
 Message::Message(
                  TTF_Font* pFont,
                  SDL_Color color,
-                 char* text
+                 const char* text
                  )
 {
     m_pFont = pFont;

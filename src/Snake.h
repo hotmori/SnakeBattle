@@ -2,10 +2,12 @@
 
 #include <SDL.h>
 #include <deque>
+#include <cstdlib>
+
 #include "SnakeSegment.h"
 #include "Coin.h"
 #include "config.h"
-#include <cstdlib>
+#include "EventQueue.h"
 
 static const unsigned COLLISION_NOT_HAPPENED = 0;
 static const unsigned COLLISSION_HEAD_VS_BODY = 1;
@@ -18,14 +20,7 @@ struct SKeyControls
     unsigned GoRightKey;
     unsigned GoLeftKey;
 };
-/*
-struct SDL_Color {
-    unsigned Red;
-    unsigned Green;
-    unsigned Blue;
-    unsigned Alpha;
-};
-*/
+
 class Snake
 {
 public:

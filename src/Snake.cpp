@@ -249,6 +249,12 @@ unsigned Snake::CheckForCollission(Snake* pAnotherSnake)
         }
 
     }
+
+    if (bresult) {
+        Event* pEvent = new Event(1, 2, this->m_ID);
+        EventQueue::AddEvent(pEvent);
+    }
+
     return bresult;
 }
 

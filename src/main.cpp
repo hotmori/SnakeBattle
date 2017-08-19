@@ -18,10 +18,6 @@ int main(int argc, char* argv[])
 
    LOG("Starting the game %s", __FUNCTION__);
 
-
-   std::unordered_map<std::string,std::string> mymap;
-   mymap = {{"Australia","Canberra"},{"U.S.","Washington"},{"France","Paris"}};
-
     unsigned time = 0;
 
     SDL_Event sdlEvent;
