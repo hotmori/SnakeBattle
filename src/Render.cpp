@@ -70,13 +70,15 @@ void Render::IniMessageTextures(Snake* pSnake1, Snake* pSnake2) {
 
 
    Message m_plus_1(m_TextFont, pSnake1->m_segmentColor, "+1");
-   m_MessageTextures[MSG_PLUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_plus_1);
-  /*
-   Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, "-1");
-
    Message m_plus_2(m_TextFont, pSnake2->m_segmentColor, "+1");
+   Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, "-1");
    Message m_minus_2(m_TextFont, pSnake2->m_segmentColor, "-1");
-*/
+
+   m_MessageTextures[MSG_PLUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_plus_1);
+   m_MessageTextures[MSG_PLUS_SCORE_SECOND_PLAYER] = this->CreateTexture(m_plus_2);
+   m_MessageTextures[MSG_MINUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_minus_1);
+   m_MessageTextures[MSG_MINUS_SCORE_SECOND_PLAYER] = this->CreateTexture(m_minus_2);
+
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
    m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win!");
@@ -122,35 +124,9 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
     SDL_RenderCopy(m_Renderer, m_MessageTextures[index], NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
 }
 
-/*
-void Render::RenderMessage(Message &message, unsigned x, unsigned y) {
-
-    if (message.m_pTexture == NULL) {
-
-        message.m_pTexture = this->CreateTexture(message);
-    }
-
-    int texW = 0;
-    int texH = 0;
-    //TODO null pointer is here for second message
-    SDL_Texture* pTexture =  message.m_pTexture;
-    SDL_QueryTexture(pTexture, NULL, NULL, &texW, &texH);
-    SDL_Rect dstrect;
-    dstrect.h = texH;
-    dstrect.w = texW;
-     //center align
-    dstrect.x = x - texW/2;
-    dstrect.y = y - texH/2;
-
-    SDL_RenderCopy(m_Renderer, pTexture, NULL, &dstrect); //you put the renderer's name first, the Message, the crop size(you can ignore this if you don't want to dabble with cropping), and the rect which is the size and coordinate of your texture
-
-}
-*/
-
-
 void Render::RenderBackground ()
 {
-   SDL_SetRenderDrawColor(m_Renderer, 0, 64, 0, 255);
+   SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
    SDL_RenderFillRect(m_Renderer, NULL);
 }
 

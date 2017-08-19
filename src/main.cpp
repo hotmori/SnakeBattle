@@ -10,6 +10,8 @@
 #include "Snake.h"
 #include "Render.h"
 #include "Logger.h"
+#include "Event.h"
+#include "EventQueue.h"
 
 int main(int argc, char* argv[])
 {
@@ -129,8 +131,30 @@ int main(int argc, char* argv[])
         render.RenderObject(&snake2);
         render.RenderObject(&coin);
 
-        render.RenderMessage(MSG_PLUS_SCORE_FIRST_PLAYER);
+        for (unsigned i = 0; i < EventQueue::m_Events.size(); i++) {
+          Event* pEvent = EventQueue::GetEvent(i);
 
+          if (pEvent == NULL) {
+            break;
+          }
+
+          switch (pEvent->m_EventType) {
+            case EVENT_SNAKE_PLUS_SEGMENT :
+              if (pEvent->m_PlayerID == FIRST_PLAYER_ID) {
+                render.RenderMessage(MSG_PLUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID) {
+                render.RenderMessage(MSG_PLUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+           case EVENT_SNAKE_MINUS_SEGMENT :
+              if (pEvent->m_PlayerID == FIRST_PLAYER_ID) {
+                render.RenderMessage(MSG_MINUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID) {
+                render.RenderMessage(MSG_MINUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+          }
+        }
         if (snake.IsDead() && snake2.IsDead()) {
             render.RenderMessage(MSG_GAME_DRAW);
         }

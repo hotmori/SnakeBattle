@@ -131,6 +131,8 @@ void Snake::Update(Snake* pAnotherSnake)
     //if no action then check for collision and move
     if (this->checkForSelfCollission())
     {
+        Event* pEvent = new Event(EVENT_SNAKE_MINUS_SEGMENT, 100, this->m_ID);
+        EventQueue::AddEvent(pEvent);
         this->CutTheTail();
     }
 
@@ -142,21 +144,32 @@ void Snake::Update(Snake* pAnotherSnake)
     //block on collission to avoid greedy behaviour
     //block is cleaned when first no collission move happened
     //however there is still issue with moving through walls
-    case COLLISSION_HEAD_VS_BODY:
+    case COLLISSION_HEAD_VS_BODY: {
+
         if (!this->CollissionAnSnakeBlocked)
         {
             this->CutTheTail();
             this->CollissionAnSnakeBlocked = true;
         }
-        break;
-    case COLLISION_HEAD_VS_HEAD:
-        if (!this->CollissionAnSnakeBlocked)
-        {
-            this->CutTheTail();
-            pAnotherSnake->CutTheTail();
 
-            this->CollissionAnSnakeBlocked = true;
-            pAnotherSnake->CollissionAnSnakeBlocked = true;
+          Event* pEvent = new Event(EVENT_SNAKE_MINUS_SEGMENT, 150, this->m_ID);
+          EventQueue::AddEvent(pEvent);
+        }
+        break;
+    case COLLISION_HEAD_VS_HEAD: {
+            if (!this->CollissionAnSnakeBlocked)
+            {
+                this->CutTheTail();
+                pAnotherSnake->CutTheTail();
+
+                this->CollissionAnSnakeBlocked = true;
+                pAnotherSnake->CollissionAnSnakeBlocked = true;
+
+            }
+
+            Event* pEvent = new Event(EVENT_SNAKE_MINUS_SEGMENT, 150, this->m_ID);
+            EventQueue::AddEvent(pEvent);
+
         }
         break;
     case 0:
@@ -171,6 +184,9 @@ void Snake::Update(Snake* pAnotherSnake)
 
     if (this->checkForCoinCollission())
     {
+
+        Event* pEvent = new Event(EVENT_SNAKE_PLUS_SEGMENT, 100, this->m_ID);
+        EventQueue::AddEvent(pEvent);
         //no cut of of the tail of a snake happens, that's why it gets longer
         //respawn coin, so it appears in new random place
         this->m_pCoin->Respawn();
@@ -248,11 +264,6 @@ unsigned Snake::CheckForCollission(Snake* pAnotherSnake)
             bresult = (i == 0) ? COLLISION_HEAD_VS_HEAD : COLLISSION_HEAD_VS_BODY;
         }
 
-    }
-
-    if (bresult) {
-        Event* pEvent = new Event(1, 2, this->m_ID);
-        EventQueue::AddEvent(pEvent);
     }
 
     return bresult;
