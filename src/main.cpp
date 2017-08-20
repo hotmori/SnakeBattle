@@ -148,10 +148,10 @@ int main(int argc, char* argv[])
               }
           }
           else if (pEvent->m_EventType == EVENT_SNAKE_MINUS_SEGMENT) {
-              if (pEvent->m_PlayerID == FIRST_PLAYER_ID) {
+              if (pEvent->m_PlayerID == FIRST_PLAYER_ID && !snake.IsDead()) {
                 render.RenderMessage(MSG_MINUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
               }
-              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID) {
+              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID && !snake2.IsDead()) {
                 render.RenderMessage(MSG_MINUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
               }
 
