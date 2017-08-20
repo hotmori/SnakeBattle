@@ -13,6 +13,7 @@ static const unsigned COLLISION_NOT_HAPPENED = 0;
 static const unsigned COLLISSION_HEAD_VS_BODY = 1;
 static const unsigned COLLISION_HEAD_VS_HEAD = 2;
 
+
 struct SKeyControls
 {
     unsigned GoUpKey;
