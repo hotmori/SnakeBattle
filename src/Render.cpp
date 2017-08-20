@@ -3,6 +3,9 @@
 Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
 {
 
+   // This line is only needed, if you want debug the program
+   SDL_SetHint(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
+
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         std::cerr << "SDL_Init Failed: "
@@ -27,8 +30,6 @@ Render::Render(): m_Renderer ( NULL ), m_pWindow ( NULL )
                   << SDL_GetError() << std::endl;
     }
 
-    this->IniMessages();
-
 }
 Render::~Render() {
 
@@ -40,13 +41,17 @@ Render::~Render() {
 
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_pWindow);
+
+    TTF_CloseFont(m_TextFont);
     TTF_Quit();
     SDL_Quit();
 }
 
-void Render::IniMessages() {
+void Render::IniMessageTextures(Snake* pSnake1, Snake* pSnake2) {
 
-     m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
+   LOG("%s ", __FUNCTION__);
+
+   m_TextFont = TTF_OpenFont(MSG_FONT, MSG_FONT_SIZE);
 
     if (m_TextFont == NULL) {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
@@ -63,6 +68,17 @@ void Render::IniMessages() {
         m_MessageTextures[i] = NULL;
    }
 
+
+   Message m_plus_1(m_TextFont, pSnake1->m_segmentColor, "+1");
+   Message m_plus_2(m_TextFont, pSnake2->m_segmentColor, "+1");
+   Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, "-1");
+   Message m_minus_2(m_TextFont, pSnake2->m_segmentColor, "-1");
+
+   m_MessageTextures[MSG_PLUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_plus_1);
+   m_MessageTextures[MSG_PLUS_SCORE_SECOND_PLAYER] = this->CreateTexture(m_plus_2);
+   m_MessageTextures[MSG_MINUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_minus_1);
+   m_MessageTextures[MSG_MINUS_SCORE_SECOND_PLAYER] = this->CreateTexture(m_minus_2);
+
    m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
    m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
    m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win!");
@@ -74,6 +90,18 @@ void Render::IniMessages() {
 SDL_Texture* Render::CreateTextureForMessage(const char* pTextMessage) {
 
   SDL_Surface* pSurfaceMessage = TTF_RenderText_Blended(m_TextFont, pTextMessage, m_TextColor);
+  SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
+
+  SDL_FreeSurface(pSurfaceMessage);
+  return pTextureMessage;
+}
+
+SDL_Texture* Render::CreateTexture(Message &message) {
+
+  SDL_Surface* pSurfaceMessage;
+  pSurfaceMessage = TTF_RenderText_Blended(message.m_pFont, message.m_Text, message.m_Color);
+
+
   SDL_Texture* pTextureMessage = SDL_CreateTextureFromSurface(m_Renderer, pSurfaceMessage);
 
   SDL_FreeSurface(pSurfaceMessage);
@@ -98,7 +126,7 @@ void Render::RenderMessage(unsigned index, unsigned x, unsigned y) {
 
 void Render::RenderBackground ()
 {
-   SDL_SetRenderDrawColor(m_Renderer, 0, 64, 0, 255);
+   SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
    SDL_RenderFillRect(m_Renderer, NULL);
 }
 
@@ -117,10 +145,10 @@ void Render::RenderObject(Snake* pSnake)
     m_RenderRect.x = pSnake->GetSegmentX(0) * CELL_SIZE;
     m_RenderRect.y = pSnake->GetSegmentY(0) * CELL_SIZE;
 
-    SDL_SetRenderDrawColor(m_Renderer, pSnake->m_headColor.Red,
-                                       pSnake->m_headColor.Green,
-                                       pSnake->m_headColor.Blue,
-                                       pSnake->m_headColor.Alpha);
+    SDL_SetRenderDrawColor(m_Renderer, pSnake->m_headColor.r,
+                                       pSnake->m_headColor.g,
+                                       pSnake->m_headColor.b,
+                                       pSnake->m_headColor.a);
 
     SDL_RenderFillRect(m_Renderer, &m_RenderRect);
 
@@ -129,10 +157,10 @@ void Render::RenderObject(Snake* pSnake)
         m_RenderRect.x = pSnake->GetSegmentX(i) * CELL_SIZE;
         m_RenderRect.y = pSnake->GetSegmentY(i) * CELL_SIZE;
 
-        SDL_SetRenderDrawColor(m_Renderer, pSnake->m_segmentColor.Red,
-                                           pSnake->m_segmentColor.Green,
-                                           pSnake->m_segmentColor.Blue,
-                                           pSnake->m_segmentColor.Alpha);
+        SDL_SetRenderDrawColor(m_Renderer, pSnake->m_segmentColor.r,
+                                           pSnake->m_segmentColor.g,
+                                           pSnake->m_segmentColor.b,
+                                           pSnake->m_segmentColor.a);
 
         SDL_RenderFillRect(m_Renderer, &m_RenderRect);
     }
@@ -153,10 +181,10 @@ void Render::RenderObject(Coin* pCoin)
     m_RenderRect.x = pCoin->GetX() * CELL_SIZE;
     m_RenderRect.y = pCoin->GetY() * CELL_SIZE;
 
-    SDL_SetRenderDrawColor(m_Renderer, pCoin->m_CoinColor.Red,
-                                       pCoin->m_CoinColor.Green,
-                                       pCoin->m_CoinColor.Blue,
-                                       pCoin->m_CoinColor.Alpha);
+    SDL_SetRenderDrawColor(m_Renderer, pCoin->m_CoinColor.r,
+                                       pCoin->m_CoinColor.g,
+                                       pCoin->m_CoinColor.b,
+                                       pCoin->m_CoinColor.a);
 
     SDL_RenderFillRect(m_Renderer, &m_RenderRect);
 }

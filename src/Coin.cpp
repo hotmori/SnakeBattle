@@ -1,7 +1,7 @@
 #include "Coin.h"
 #include "config.h"
 
-Coin::Coin(CColor coinColor)
+Coin::Coin(SDL_Color coinColor)
 {
     this->m_CoinColor = coinColor;
     this->Respawn();

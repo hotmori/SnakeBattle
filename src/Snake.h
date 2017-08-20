@@ -2,14 +2,17 @@
 
 #include <SDL.h>
 #include <deque>
+#include <cstdlib>
+
 #include "SnakeSegment.h"
 #include "Coin.h"
 #include "config.h"
-#include <cstdlib>
+#include "EventQueue.h"
 
 static const unsigned COLLISION_NOT_HAPPENED = 0;
 static const unsigned COLLISSION_HEAD_VS_BODY = 1;
 static const unsigned COLLISION_HEAD_VS_HEAD = 2;
+
 
 struct SKeyControls
 {
@@ -19,18 +22,11 @@ struct SKeyControls
     unsigned GoLeftKey;
 };
 
-struct SColor {
-    unsigned Red;
-    unsigned Green;
-    unsigned Blue;
-    unsigned Alpha;
-};
-
 class Snake
 {
 public:
-    Snake(SColor headColor,
-          SColor segmentColor,
+    Snake(SDL_Color headColor,
+          SDL_Color segmentColor,
           Coin* pCoin,
           SKeyControls sKeys,
           unsigned ID);
@@ -45,8 +41,8 @@ public:
     void MoveThroughWall();
     void Kill();
     void CutTheTail();
-    SColor m_headColor;
-    SColor m_segmentColor;
+    SDL_Color m_headColor;
+    SDL_Color m_segmentColor;
 private:
     std::deque<SnakeSegment> m_Segments;
     Coin* m_pCoin;

@@ -1,22 +1,31 @@
 #include <iostream>
 #include <deque>
-
+#include <stdio.h>
 #include <SDL.h>
+#include <unordered_map>
 
 #include "SnakeSegment.h"
 #include "Coin.h"
 #include "config.h"
 #include "Snake.h"
 #include "Render.h"
+#include "Logger.h"
+#include "Event.h"
+#include "EventQueue.h"
 
 int main(int argc, char* argv[])
 {
+
+   Logger::ResetLog();
+
+   LOG("Starting the game %s", __FUNCTION__);
+
     unsigned time = 0;
 
     SDL_Event sdlEvent;
 
-    SColor SnakeHeadColor, SnakeSegmentColor;
-    SColor SnakeHeadColor2, SnakeSegmentColor2;
+    SDL_Color SnakeHeadColor, SnakeSegmentColor;
+    SDL_Color SnakeHeadColor2, SnakeSegmentColor2;
 
 
     bool isRunning;
@@ -25,22 +34,22 @@ int main(int argc, char* argv[])
 
     isRunning = true;
 
-    CColor CoinColor;
-    CoinColor.Red = 255;
-    CoinColor.Green = 255;
-    CoinColor.Blue = 0;
-    CoinColor.Alpha = 255;
+    SDL_Color CoinColor;
+    CoinColor.r = 255;
+    CoinColor.g = 255;
+    CoinColor.b = 0;
+    CoinColor.a = 255;
     Coin coin(CoinColor);
 
-    SnakeHeadColor.Red = 255;
-    SnakeHeadColor.Green = 0;
-    SnakeHeadColor.Blue = 0;
-    SnakeHeadColor.Alpha = 255;
+    SnakeHeadColor.r = 255;
+    SnakeHeadColor.g = 0;
+    SnakeHeadColor.b = 0;
+    SnakeHeadColor.a = 255;
 
-    SnakeSegmentColor.Red = 0;
-    SnakeSegmentColor.Green = 255;
-    SnakeSegmentColor.Blue = 0;
-    SnakeSegmentColor.Alpha = 255;
+    SnakeSegmentColor.r = 0;
+    SnakeSegmentColor.g = 255;
+    SnakeSegmentColor.b = 0;
+    SnakeSegmentColor.a = 255;
 
     SKeyControls sKeys;
 
@@ -53,15 +62,15 @@ int main(int argc, char* argv[])
 
     //Second snake
 
-    SnakeHeadColor2.Red = 140;
-    SnakeHeadColor2.Green = 0;
-    SnakeHeadColor2.Blue = 140;
-    SnakeHeadColor2.Alpha = 255;
+    SnakeHeadColor2.r = 140;
+    SnakeHeadColor2.g = 0;
+    SnakeHeadColor2.b = 140;
+    SnakeHeadColor2.a = 255;
 
-    SnakeSegmentColor2.Red = 0;
-    SnakeSegmentColor2.Green = 0;
-    SnakeSegmentColor2.Blue = 200;
-    SnakeSegmentColor2.Alpha = 255;
+    SnakeSegmentColor2.r = 0;
+    SnakeSegmentColor2.g = 0;
+    SnakeSegmentColor2.b = 200;
+    SnakeSegmentColor2.a = 255;
 
     SKeyControls sKeys2;
 
@@ -71,6 +80,8 @@ int main(int argc, char* argv[])
     sKeys2.GoLeftKey = SDLK_a;
 
     Snake snake2(SnakeHeadColor2, SnakeSegmentColor2, &coin, sKeys2, SECOND_PLAYER_ID);
+
+    render.IniMessageTextures(&snake, &snake2);
 
     while(isRunning)
     {
@@ -120,6 +131,32 @@ int main(int argc, char* argv[])
         render.RenderObject(&snake2);
         render.RenderObject(&coin);
 
+        for (unsigned i = 0; i < EventQueue::m_Events.size(); i++) {
+          Event* pEvent = EventQueue::GetEvent(i);
+
+          if (pEvent == NULL) {
+            break;
+          }
+
+          //TODO refactor this ugliest piece
+          if (pEvent->m_EventType == EVENT_SNAKE_PLUS_SEGMENT) {
+              if (pEvent->m_PlayerID == FIRST_PLAYER_ID) {
+                render.RenderMessage(MSG_PLUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID) {
+                render.RenderMessage(MSG_PLUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+          }
+          else if (pEvent->m_EventType == EVENT_SNAKE_MINUS_SEGMENT) {
+              if (pEvent->m_PlayerID == FIRST_PLAYER_ID && !snake.IsDead()) {
+                render.RenderMessage(MSG_MINUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID && !snake2.IsDead()) {
+                render.RenderMessage(MSG_MINUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
+              }
+
+          }
+        }
         if (snake.IsDead() && snake2.IsDead()) {
             render.RenderMessage(MSG_GAME_DRAW);
         }
