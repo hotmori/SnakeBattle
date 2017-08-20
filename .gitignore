@@ -36,3 +36,6 @@ bin/
 
 SnakeBattle.depend
 SnakeBattle.layout
+
+# Log files
+*.log
