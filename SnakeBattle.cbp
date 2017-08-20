@@ -55,6 +55,10 @@
 		</Linker>
 		<Unit filename="src/Coin.cpp" />
 		<Unit filename="src/Coin.h" />
+		<Unit filename="src/Event.cpp" />
+		<Unit filename="src/Event.h" />
+		<Unit filename="src/EventQueue.cpp" />
+		<Unit filename="src/EventQueue.h" />
 		<Unit filename="src/Logger.cpp" />
 		<Unit filename="src/Logger.h" />
 		<Unit filename="src/Message.cpp" />
