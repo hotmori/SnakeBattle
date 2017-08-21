@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 
     SnakeSegmentColor2.r = 0;
     SnakeSegmentColor2.g = 0;
-    SnakeSegmentColor2.b = 200;
+    SnakeSegmentColor2.b = 255;
     SnakeSegmentColor2.a = 255;
 
     SKeyControls sKeys2;
