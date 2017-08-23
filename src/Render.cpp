@@ -68,7 +68,6 @@ void Render::IniMessageTextures(Snake* pSnake1, Snake* pSnake2) {
         m_MessageTextures[i] = NULL;
    }
 
-
    Message m_plus_1(m_TextFont, pSnake1->m_segmentColor, "+1");
    Message m_plus_2(m_TextFont, pSnake2->m_segmentColor, "+1");
    Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, "-1");
@@ -187,6 +186,28 @@ void Render::RenderObject(Coin* pCoin)
                                        pCoin->m_CoinColor.a);
 
     SDL_RenderFillRect(m_Renderer, &m_RenderRect);
+}
+
+void Render::RenderMessageForEvent(Event* pEvent) {
+
+  unsigned msgIndex = (unsigned)NULL;
+
+  Snake* pSnake =  pEvent->m_Snake;
+  if (pEvent->m_EventType == EVENT_SNAKE_PLUS_SEGMENT) {
+    if (pSnake->m_ID == FIRST_PLAYER_ID)
+      msgIndex = MSG_PLUS_SCORE_FIRST_PLAYER;
+    else if (pSnake->m_ID == SECOND_PLAYER_ID)
+      msgIndex = MSG_PLUS_SCORE_SECOND_PLAYER;
+  }
+  else if (pEvent->m_EventType == EVENT_SNAKE_MINUS_SEGMENT) {
+    if (pSnake->m_ID == FIRST_PLAYER_ID)
+      msgIndex = MSG_MINUS_SCORE_FIRST_PLAYER;
+    else if (pSnake->m_ID == SECOND_PLAYER_ID)
+      msgIndex = MSG_MINUS_SCORE_SECOND_PLAYER;
+  }
+
+  this->RenderMessage(msgIndex, (pSnake->GetSegmentX(0) - 2) * CELL_SIZE, (pSnake->GetSegmentY(0) - 2) * CELL_SIZE );
+
 }
 
 void Render::Display()

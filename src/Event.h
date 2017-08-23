@@ -1,5 +1,6 @@
 #pragma once
-#include <cstddef>
+
+class Snake;
 
 static const unsigned EVENT_SNAKE_PLUS_SEGMENT = 1;
 static const unsigned EVENT_SNAKE_MINUS_SEGMENT = 2;
@@ -9,10 +10,12 @@ class Event {
   public:
     unsigned m_EventType;
     unsigned m_CounterNotification;
-    unsigned m_PlayerID;
-    Event(unsigned evenType,
-          unsigned counterNotification = 1,
-          unsigned playerID = (unsigned)NULL);
+    Snake* m_Snake;
+    Event(unsigned evenType
+          ,unsigned counterNotification
+          ,Snake* snake
+
+          );
     void DecrementCounter();
 
 };

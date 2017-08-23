@@ -21,6 +21,8 @@ public:
     void RenderObject(Coin* pCoin);
     void RenderMessage(unsigned index, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
     void RenderMessage(Message &message, unsigned x = WINDOW_WIDTH/2, unsigned y = WINDOW_HEIGHT/2);
+    void RenderMessageForEvent(Event* pEvent);
+
     SDL_Texture* CreateTextureForMessage(const char* TextMessage);
     SDL_Texture* CreateTexture(Message &message);
     void Display();

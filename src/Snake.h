@@ -2,11 +2,9 @@
 
 #include <SDL.h>
 #include <deque>
-#include <cstdlib>
 
 #include "SnakeSegment.h"
 #include "Coin.h"
-#include "config.h"
 #include "EventQueue.h"
 
 static const unsigned COLLISION_NOT_HAPPENED = 0;
@@ -43,6 +41,7 @@ public:
     void CutTheTail();
     SDL_Color m_headColor;
     SDL_Color m_segmentColor;
+    unsigned m_ID;
 private:
     std::deque<SnakeSegment> m_Segments;
     Coin* m_pCoin;
@@ -54,7 +53,7 @@ private:
     bool checkForWallCollission();
     bool checkForSelfCollission();
     bool checkForCoinCollission();
-    unsigned m_ID;
+
 
     SKeyControls m_sKeys;
 };

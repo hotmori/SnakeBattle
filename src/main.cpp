@@ -138,24 +138,7 @@ int main(int argc, char* argv[])
             break;
           }
 
-          //TODO refactor this ugliest piece
-          if (pEvent->m_EventType == EVENT_SNAKE_PLUS_SEGMENT) {
-              if (pEvent->m_PlayerID == FIRST_PLAYER_ID) {
-                render.RenderMessage(MSG_PLUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
-              }
-              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID) {
-                render.RenderMessage(MSG_PLUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
-              }
-          }
-          else if (pEvent->m_EventType == EVENT_SNAKE_MINUS_SEGMENT) {
-              if (pEvent->m_PlayerID == FIRST_PLAYER_ID && !snake.IsDead()) {
-                render.RenderMessage(MSG_MINUS_SCORE_FIRST_PLAYER, (snake.GetSegmentX(0) - 2) * CELL_SIZE, (snake.GetSegmentY(0) - 2) * CELL_SIZE);
-              }
-              else if (pEvent->m_PlayerID == SECOND_PLAYER_ID && !snake2.IsDead()) {
-                render.RenderMessage(MSG_MINUS_SCORE_SECOND_PLAYER, (snake2.GetSegmentX(0) - 2) * CELL_SIZE, (snake2.GetSegmentY(0) - 2) * CELL_SIZE);
-              }
-
-          }
+          render.RenderMessageForEvent(pEvent);
         }
         if (snake.IsDead() && snake2.IsDead()) {
             render.RenderMessage(MSG_GAME_DRAW);
