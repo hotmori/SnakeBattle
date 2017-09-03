@@ -33,7 +33,15 @@ static const unsigned MSG_GAME_OVER = 2;
 static const unsigned MSG_FIRST_PLAYER_WIN = 3;
 static const unsigned MSG_SECOND_PLAYER_WIN = 4;
 static const unsigned MSG_GAME_DRAW = 5;
+
 static const unsigned MSG_PLUS_SCORE_FIRST_PLAYER = 6;
 static const unsigned MSG_MINUS_SCORE_FIRST_PLAYER = 7;
 static const unsigned MSG_PLUS_SCORE_SECOND_PLAYER = 8;
 static const unsigned MSG_MINUS_SCORE_SECOND_PLAYER = 9;
+
+static const char MSG_GAME_START_TXT[] = "Game Started";
+static const char MSG_PLUS_SCORE[] = "+1";
+static const char MSG_MINUS_SCORE[] = "-1";
+static const char MSG_FIRST_PLAYER_WIN_TXT[] = "First player win!";
+static const char MSG_SECOND_PLAYER_WIN_TXT[] = "Second player win!";
+static const char MSG_GAME_DRAW_TXT[] = "Everybody won!";

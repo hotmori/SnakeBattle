@@ -68,21 +68,22 @@ void Render::IniMessageTextures(Snake* pSnake1, Snake* pSnake2) {
         m_MessageTextures[i] = NULL;
    }
 
-   Message m_plus_1(m_TextFont, pSnake1->m_segmentColor, "+1");
-   Message m_plus_2(m_TextFont, pSnake2->m_segmentColor, "+1");
-   Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, "-1");
-   Message m_minus_2(m_TextFont, pSnake2->m_segmentColor, "-1");
+   Message m_plus_1(m_TextFont, pSnake1->m_segmentColor, MSG_PLUS_SCORE);
+   Message m_plus_2(m_TextFont, pSnake2->m_segmentColor, MSG_PLUS_SCORE);
+   Message m_minus_1(m_TextFont, pSnake1->m_segmentColor, MSG_MINUS_SCORE);
+   Message m_minus_2(m_TextFont, pSnake2->m_segmentColor, MSG_MINUS_SCORE);
+   Message m_game_start(m_TextFont, m_TextColor, MSG_GAME_START_TXT);
 
    m_MessageTextures[MSG_PLUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_plus_1);
    m_MessageTextures[MSG_PLUS_SCORE_SECOND_PLAYER] = this->CreateTexture(m_plus_2);
    m_MessageTextures[MSG_MINUS_SCORE_FIRST_PLAYER] = this->CreateTexture(m_minus_1);
    m_MessageTextures[MSG_MINUS_SCORE_SECOND_PLAYER] = this->CreateTexture(m_minus_2);
+   m_MessageTextures[MSG_GAME_START] = this->CreateTexture(m_game_start);
 
-   m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage("Game started.");
-   m_MessageTextures[MSG_GAME_OVER] = this->CreateTextureForMessage("Game over.");
-   m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage("First player win!");
-   m_MessageTextures[MSG_SECOND_PLAYER_WIN] = this->CreateTextureForMessage("Second player win!");
-   m_MessageTextures[MSG_GAME_DRAW] = this->CreateTextureForMessage("Everybody won!");
+   m_MessageTextures[MSG_GAME_START] = this->CreateTextureForMessage(MSG_GAME_START_TXT);
+   m_MessageTextures[MSG_FIRST_PLAYER_WIN] = this->CreateTextureForMessage(MSG_FIRST_PLAYER_WIN_TXT);
+   m_MessageTextures[MSG_SECOND_PLAYER_WIN] = this->CreateTextureForMessage(MSG_SECOND_PLAYER_WIN_TXT);
+   m_MessageTextures[MSG_GAME_DRAW] = this->CreateTextureForMessage(MSG_GAME_DRAW_TXT);
 
 }
 
