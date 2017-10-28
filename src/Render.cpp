@@ -193,21 +193,45 @@ void Render::RenderMessageForEvent(Event* pEvent) {
 
   unsigned msgIndex = (unsigned)NULL;
 
-  Snake* pSnake =  pEvent->m_Snake;
-  if (pEvent->m_EventType == EVENT_SNAKE_PLUS_SEGMENT) {
-    if (pSnake->m_ID == FIRST_PLAYER_ID)
-      msgIndex = MSG_PLUS_SCORE_FIRST_PLAYER;
-    else if (pSnake->m_ID == SECOND_PLAYER_ID)
-      msgIndex = MSG_PLUS_SCORE_SECOND_PLAYER;
-  }
-  else if (pEvent->m_EventType == EVENT_SNAKE_MINUS_SEGMENT) {
-    if (pSnake->m_ID == FIRST_PLAYER_ID)
-      msgIndex = MSG_MINUS_SCORE_FIRST_PLAYER;
-    else if (pSnake->m_ID == SECOND_PLAYER_ID)
-      msgIndex = MSG_MINUS_SCORE_SECOND_PLAYER;
+  //Need to refactor this via virtual functions or visitor pattern
+  EventSnake* pEventSnake = dynamic_cast<EventSnake *>(pEvent);
+  if ( pEventSnake != NULL )
+  {
+      Snake* pSnake = pEventSnake->m_Snake;
+
+      if (pEvent->m_EventType == EVENT_SNAKE_PLUS_SEGMENT) {
+        if (pSnake->m_ID == FIRST_PLAYER_ID)
+          msgIndex = MSG_PLUS_SCORE_FIRST_PLAYER;
+        else if (pSnake->m_ID == SECOND_PLAYER_ID)
+          msgIndex = MSG_PLUS_SCORE_SECOND_PLAYER;
+      }
+      else if (pEvent->m_EventType == EVENT_SNAKE_MINUS_SEGMENT) {
+        if (pSnake->m_ID == FIRST_PLAYER_ID)
+          msgIndex = MSG_MINUS_SCORE_FIRST_PLAYER;
+        else if (pSnake->m_ID == SECOND_PLAYER_ID)
+          msgIndex = MSG_MINUS_SCORE_SECOND_PLAYER;
+      }
+
+      this->RenderMessage(msgIndex, (pSnake->GetSegmentX(0) - 2) * CELL_SIZE, (pSnake->GetSegmentY(0) - 2) * CELL_SIZE );
+      return;
   }
 
-  this->RenderMessage(msgIndex, (pSnake->GetSegmentX(0) - 2) * CELL_SIZE, (pSnake->GetSegmentY(0) - 2) * CELL_SIZE );
+  switch ( pEvent->m_EventType )
+  {
+     case EVENT_FIRST_PLAYER_WIN:
+         msgIndex = MSG_FIRST_PLAYER_WIN;
+         break;
+     case EVENT_SECOND_PLAYER_WIN:
+         msgIndex = MSG_SECOND_PLAYER_WIN;
+         break;
+     case EVENT_GAME_DRAW:
+         msgIndex = MSG_GAME_DRAW;
+         break;
+     default:
+         break;
+  }
+
+  this->RenderMessage(msgIndex);
 
 }
 

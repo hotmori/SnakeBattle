@@ -140,15 +140,6 @@ int main(int argc, char* argv[])
 
           render.RenderMessageForEvent(pEvent);
         }
-        if (snake.IsDead() && snake2.IsDead()) {
-            render.RenderMessage(MSG_GAME_DRAW);
-        }
-        else if (snake.IsDead()) {
-            render.RenderMessage(MSG_SECOND_PLAYER_WIN);
-        }
-        else if (snake2.IsDead()) {
-            render.RenderMessage(MSG_FIRST_PLAYER_WIN);
-        }
         render.Display();
     }
     SDL_Quit();

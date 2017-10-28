@@ -131,7 +131,7 @@ void Snake::Update(Snake* pAnotherSnake)
     //if no action then check for collision and move
     if (this->checkForSelfCollission())
     {
-        Event* pEvent = new Event(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, this);
+        Event* pEvent = new EventSnake(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, this);
         EventQueue::AddEvent(pEvent);
         this->CutTheTail();
     }
@@ -150,7 +150,7 @@ void Snake::Update(Snake* pAnotherSnake)
         {
             this->CutTheTail();
             this->CollissionAnSnakeBlocked = true;
-            Event* pEvent = new Event(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, this);
+            Event* pEvent = new EventSnake(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, this);
             EventQueue::AddEvent(pEvent);
         }
         break;
@@ -159,13 +159,13 @@ void Snake::Update(Snake* pAnotherSnake)
             {
                 this->CollissionAnSnakeBlocked = true;
                 pAnotherSnake->CollissionAnSnakeBlocked = true;
-                Event* pEvent = new Event(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, this);
+                Event* pEvent = new EventSnake(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, this);
                 EventQueue::AddEvent(pEvent);
 
                 this->CutTheTail();
                 pAnotherSnake->CutTheTail();
-                Event* pEventAnotner = new Event(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, pAnotherSnake);
-                EventQueue::AddEvent(pEventAnotner);
+                Event* pEventAnother = new EventSnake(EVENT_SNAKE_MINUS_SEGMENT, NOTIFICATION_COUNTER, pAnotherSnake);
+                EventQueue::AddEvent(pEventAnother);
 
 
             }
@@ -175,15 +175,25 @@ void Snake::Update(Snake* pAnotherSnake)
         break;
     }
 
-    if (IsDead())
+    //Check for death
+    if (IsDead() && pAnotherSnake->IsDead() )
     {
+        Event* pEvent = new Event(EVENT_GAME_DRAW, NOTIFICATION_COUNTER_GAME_OVER);
+        EventQueue::AddEvent(pEvent);
+        return;
+    }
+    if ( this->IsDead() ) {
+
+        Event* pEvent = new Event( ( (this->m_ID == FIRST_PLAYER_ID) ? EVENT_SECOND_PLAYER_WIN : EVENT_FIRST_PLAYER_WIN),
+                                    NOTIFICATION_COUNTER_GAME_OVER );
+        EventQueue::AddEvent(pEvent);
         return;
     }
 
     if (this->checkForCoinCollission())
     {
 
-        Event* pEvent = new Event(EVENT_SNAKE_PLUS_SEGMENT, NOTIFICATION_COUNTER, this);
+        Event* pEvent = new EventSnake(EVENT_SNAKE_PLUS_SEGMENT, NOTIFICATION_COUNTER, this);
         EventQueue::AddEvent(pEvent);
         //no cut of of the tail of a snake happens, that's why it gets longer
         //respawn coin, so it appears in new random place
